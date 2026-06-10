@@ -2,26 +2,26 @@ import apiClient from "../config/apiClient";
 
 class AdminServices {
 
-    async registerUser({name,email,password}){
-       try {
-        const payload = {
-                username: name,
-                email: email,
-                passwordHash: password 
-            };
-        const response = await apiClient.post('/admin/register', payload);
-        return response.data;
-        
-       } catch (error) {
-        throw error;
-       }
-    }
-
-    async login({name,password}){
+    async registerUser({ name, email, password }) {
         try {
             const payload = {
                 username: name,
-                passwordHash: password 
+                email: email,
+                passwordHash: password
+            };
+            const response = await apiClient.post('/admin/register', payload);
+            return response.data;
+
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async login({ name, password }) {
+        try {
+            const payload = {
+                username: name,
+                passwordHash: password
             };
             const response = await apiClient.post('/admin/login', payload);
             return response.data;
@@ -30,12 +30,8 @@ class AdminServices {
         }
     }
 
-    async logoutUser({}){
+    async logoutUser({ }) {
         try {
-            // const payload = {
-            //     username: name,
-            //     passwordHash: password 
-            // };
             const response = await apiClient.post('/admin/logout');
             return response.data;
         } catch (error) {
@@ -43,11 +39,11 @@ class AdminServices {
         }
     }
 
-    async changeCurrentPassword({oldpassword,newpassword}){
+    async changeCurrentPassword({ oldpassword, newpassword }) {
         try {
             const payload = {
                 oldpassword: oldpassword,
-                newpassword: newpassword 
+                newpassword: newpassword
             };
             const response = await apiClient.post('/admin/changePassword', payload);
             return response.data;
@@ -56,12 +52,8 @@ class AdminServices {
         }
     }
 
-    async getCurrentUser({}){
+    async getCurrentUser({ }) {
         try {
-            // const payload = {
-            //     username: name,
-            //     passwordHash: password 
-            // };
             const response = await apiClient.post('/admin/getCurrentUser');
             return response.data;
         } catch (error) {
@@ -69,26 +61,22 @@ class AdminServices {
         }
     }
 
-    async updateAdminDetails({name,email}){
-       try {
-        const payload = {
+    async updateAdminDetails({ name, email }) {
+        try {
+            const payload = {
                 username: name,
                 email: email,
             };
-        const response = await apiClient.post('/admin/updateAdminDetails', payload);
-        return response.data;
-        
-       } catch (error) {
-        throw error;
-       }
+            const response = await apiClient.post('/admin/updateAdminDetails', payload);
+            return response.data;
+
+        } catch (error) {
+            throw error;
+        }
     }
 
-    async refreshAccessToken({}){
+    async refreshAccessToken({ }) {
         try {
-            // const payload = {
-            //     username: name,
-            //     passwordHash: password 
-            // };
             const response = await apiClient.post('/admin/refreshAccessToken');
             return response.data;
         } catch (error) {

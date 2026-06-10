@@ -7,7 +7,7 @@ class ProjectServices {
             const payload = {
                 title, category, description, problem, approach, solution, result, techStack, githubLink, liveLink, isFeatured, isPublished
             };
-            const response = await apiClient.post('/admin/createProject', payload);
+            const response = await apiClient.post('/Projects/createProject', payload);
             return response.data;
 
         } catch (error) {
@@ -17,11 +17,7 @@ class ProjectServices {
 
     async getAllAdminProjects({ }) {
         try {
-            // const payload = {
-            //     username: name,
-            //     passwordHash: password 
-            // };
-            const response = await apiClient.post('/admin/getAllAdminProjects');
+            const response = await apiClient.get('/Projects/getAllAdminProjects');
             return response.data;
         } catch (error) {
             throw error;
@@ -30,12 +26,7 @@ class ProjectServices {
 
     async getAdminProjectByID({ id }) {
         try {
-            // const payload = {
-            //     name: name,
-            //     email: email,
-            //     message: message
-            // };
-            const response = await apiClient.post(`/admin/getAdminProjectByID/${id}`);
+            const response = await apiClient.get(`/Projects/getAdminProjectByID/${id}`);
             return response.data;
 
         } catch (error) {
@@ -45,12 +36,7 @@ class ProjectServices {
 
     async updateProject({ id }) {
         try {
-            // const payload = {
-            //     name: name,
-            //     email: email,
-            //     message: message
-            // };
-            const response = await apiClient.post(`/admin/updateProject/${id}`);
+            const response = await apiClient.patch(`/Projects/updateProject/${id}`);
             return response.data;
 
         } catch (error) {
@@ -58,14 +44,9 @@ class ProjectServices {
         }
     }
 
-    async updateProject({ id }) {
+    async deleteProject({ id }) {
         try {
-            // const payload = {
-            //     name: name,
-            //     email: email,
-            //     message: message
-            // };
-            const response = await apiClient.post(`/admin/deleteProject/${id}`);
+            const response = await apiClient.delete(`/Projects/deleteProject/${id}`);
             return response.data;
 
         } catch (error) {
@@ -80,7 +61,7 @@ class ProjectServices {
             const response = await apiClient.get(`/Projects/getPublicProjects/${username}`, {
                 params: {
                     featured: featured,
-                    cateogary: cateogary 
+                    cateogary: cateogary
                 }
             });
 
@@ -91,14 +72,9 @@ class ProjectServices {
         }
     }
 
-    async updateProject({ username,slug }) {
+    async updateProject({ username, slug }) {
         try {
-            // const payload = {
-            //     name: name,
-            //     email: email,
-            //     message: message
-            // };
-            const response = await apiClient.get(`/admin/getProjectBySlug/${username}/${slug}`);
+            const response = await apiClient.get(`/Projects/getProjectBySlug/${username}/${slug}`);
             return response.data;
 
         } catch (error) {
@@ -111,3 +87,4 @@ class ProjectServices {
 const projectServices = new ProjectServices();
 
 export default projectServices;
+

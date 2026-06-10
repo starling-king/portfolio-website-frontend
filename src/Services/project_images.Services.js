@@ -10,7 +10,7 @@ class ProjectImagesServices {
                 formData.append('images', imageFiles[i]);
             }
 
-            const response = await apiClient.post(`/admin/projects/${projectId}/images`, formData);
+            const response = await apiClient.post(`/images/projects/${projectId}/images`, formData);
             return response.data;
 
         } catch (error) {
@@ -18,14 +18,9 @@ class ProjectImagesServices {
         }
     }
 
-    async registerUser({ projectId, imageId }) {
+    async DeleteImages({ projectId, imageId }) {
         try {
-            // const payload = {
-            //     username: name,
-            //     email: email,
-            //     passwordHash: password
-            // };
-            const response = await apiClient.post(`/admin/projects/${projectId}/Deleteimage/${imageId}`);
+            const response = await apiClient.delete(`/images/projects/${projectId}/Deleteimage/${imageId}`);
             return response.data;
 
         } catch (error) {

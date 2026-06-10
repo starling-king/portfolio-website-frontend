@@ -9,7 +9,7 @@ class ContactMessageService {
                 email: email,
                 message: message
             };
-            const response = await apiClient.post(`/admin/saveMessage/${username}`, payload);
+            const response = await apiClient.post(`/Message/saveMessage/${username}`, payload);
             return response.data;
 
         } catch (error) {
@@ -17,14 +17,14 @@ class ContactMessageService {
         }
     }
 
-    async DiscoverMessage({}) {
+    async DiscoverMessage({ }) {
         try {
             // const payload = {
             //     name: name,
             //     email: email,
             //     message: message
             // };
-            const response = await apiClient.post('/admin/DiscoverMessage');
+            const response = await apiClient.patch('/Message/DiscoverMessage');
             return response.data;
 
         } catch (error) {
