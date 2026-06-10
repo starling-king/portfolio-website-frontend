@@ -36,7 +36,6 @@ class ProjectImagesServices {
 }
 
 
-
 const projectImagesServices = new ProjectImagesServices();
 
 export default projectImagesServices;
