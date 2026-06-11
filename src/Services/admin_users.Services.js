@@ -24,6 +24,11 @@ class AdminServices {
                 passwordHash: password
             };
             const response = await apiClient.post('/admin/login', payload);
+
+            if (response.data.success !== true) {
+                throw new Error(response.data.message || "Operation failed on backend.");
+            }
+
             return response.data;
         } catch (error) {
             throw error;
