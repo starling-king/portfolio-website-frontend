@@ -57,7 +57,7 @@ class AdminServices {
         }
     }
 
-    async getCurrentUser({ }) {
+    async getCurrentUser() {
         try {
             const response = await apiClient.post('/admin/getCurrentUser');
             return response.data;

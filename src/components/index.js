@@ -1,11 +1,7 @@
-import React from 'react'
+import Header from "./Header/Header.jsx";
+import Footer from "./footer/Footer.jsx";
 
-function index() {
-  return (
-    <div>
-      
-    </div>
-  )
+export{
+  Header,
+  Footer
 }
-
-export default index
