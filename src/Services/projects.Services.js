@@ -72,7 +72,7 @@ class ProjectServices {
         }
     }
 
-    async updateProject({ username, slug }) {
+    async getProjectBySlug({ username, slug }) {
         try {
             const response = await apiClient.get(`/Projects/getProjectBySlug/${username}/${slug}`);
             return response.data;

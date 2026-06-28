@@ -59,7 +59,7 @@ class AdminServices {
 
     async getCurrentUser() {
         try {
-            const response = await apiClient.post('/admin/getCurrentUser');
+            const response = await apiClient.get('/admin/getCurrentUser');
             return response.data;
         } catch (error) {
             throw error;

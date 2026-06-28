@@ -2,7 +2,7 @@ import apiClient from "../config/apiClient";
 
 class ProjectImagesServices {
 
-    async CreateImageCollectionOfProject({ projectId }) {
+    async CreateImageCollectionOfProject({ projectId,imageFiles }) {
         try {
             const formData = new FormData();
 
