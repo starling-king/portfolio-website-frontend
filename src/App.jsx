@@ -1,5 +1,5 @@
 import React from "react";
-import { Footer, Header } from "./components/index.js";
+import { Footer, Header,ServerWakeupBanner } from "./components/index.js";
 import { Outlet } from "react-router-dom";
 
 function App() {
@@ -7,9 +7,12 @@ function App() {
   return  (
     <div>
       {/* <h1 className="text-center text-3xl text-shadow-black">Hello world</h1> */}
-      <div className="w-full block">
+      <div className="flex flex-col min-h-screen bg-slate-50">
         <Header />
-        <Outlet />
+        <ServerWakeupBanner />
+        <main className="grow w-full">
+          <Outlet />
+        </main>
         <Footer />
       </div>
     </div>
