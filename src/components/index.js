@@ -5,6 +5,7 @@ import LogoutBtn from "./Header/LogoutBtn.jsx";
 import Container from "./container/Container.jsx";
 import ServerWakeupBanner from "./ServerWakeupBanner.jsx";
 import Button from "./Button.jsx";
+import Input from "./Input.jsx";
 
 // Public Visitor Components
 import ProjectCard from "./ProjectCard.jsx";
@@ -29,6 +30,7 @@ export {
   Container,
   ServerWakeupBanner,
   Button,
+  Input,
   
   // Public
   ProjectCard,
