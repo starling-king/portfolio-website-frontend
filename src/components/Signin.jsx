@@ -11,6 +11,14 @@ function Signin() {
 
     const navigate = useNavigate();
 
+    const authStatus = useSelector((state) => state.AuthReducer?.status);
+    
+    useEffect(() => {
+        if (authStatus) {
+            navigate('/dashboard', { replace: true }); 
+        }
+    }, [authStatus, navigate]);
+
     const registerHandler = async (e) => {
         e.preventDefault();
         setError("");
