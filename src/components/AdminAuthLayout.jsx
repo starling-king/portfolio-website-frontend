@@ -10,7 +10,7 @@ function AdminAuthLayout({ children }) {
     const [loading, setLoading] = useState(true); 
     
 
-    const authStatus = useSelector((state) => state.AuthReducer?.status);
+    const authStatus = useSelector((state) => state.AuthReducer.status);
 
     useEffect(() => {
         if (!authStatus) {

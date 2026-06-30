@@ -16,14 +16,6 @@ function Login() {
     const navigate = useNavigate();
 
 
-  
-    
-    // useEffect(() => {
-    //     if (authStatus) {
-    //         navigate('/dashboard', { replace: true }); 
-    //     }
-    // }, [authStatus, navigate]);
-    
 
     const loginHandler = async (e) => {
         e.preventDefault();
@@ -43,13 +35,13 @@ function Login() {
         }
     }
 
-    const authStatus = useSelector((state) => state.AuthReducer?.status);
+    const authStatus = useSelector((state) => state.AuthReducer.status);
 
     useEffect(() => {
-    if (authStatus) {
+    if (authStatus && !loading) {
         navigate('/dashboard', { replace: true }); 
     }
-}, [authStatus, navigate]);
+}, [authStatus, navigate,loading]);
 
 
   return (

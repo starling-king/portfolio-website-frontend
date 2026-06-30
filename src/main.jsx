@@ -7,6 +7,7 @@ import store from "./store/store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./components/Login";
 import Signin from "./components/Signin";
+import AdminAuthLayout from "./components/AdminAuthLayout";
 
 const router = createBrowserRouter([
   {
@@ -21,14 +22,22 @@ const router = createBrowserRouter([
         path: "/signin",
         element: <Signin />,
       },
+      {
+        path: "/dashboard",
+        element: (
+            <AdminAuthLayout>
+                <div>Dashboard Component Goes Here</div> {/* Replace with <Dashboard /> */}
+            </AdminAuthLayout>
+        )
+      }
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>
-  </StrictMode>,
+
 );
