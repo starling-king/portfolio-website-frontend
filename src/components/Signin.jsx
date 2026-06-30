@@ -158,7 +158,7 @@ function Signin() {
                     
                     <div className="pt-2 text-sm text-center text-slate-500">
                         Already initialized?{' '}
-                        <Link to="/login" className="font-semibold text-indigo-600 hover:text-indigo-500 hover:underline">
+                        <Link to="/login" replace className="font-semibold text-indigo-600 hover:text-indigo-500 hover:underline">
                             Log in here.
                         </Link>
                     </div>

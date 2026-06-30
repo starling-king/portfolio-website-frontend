@@ -124,7 +124,7 @@ function Login() {
                 {/* Integration with your Signin component */}
                 <div className="pt-2 text-sm text-center text-slate-500">
                     Need administrative access?{' '}
-                    <Link to="/signin" className="font-semibold text-indigo-600 hover:text-indigo-500 hover:underline">
+                    <Link to="/signin" replace className="font-semibold text-indigo-600 hover:text-indigo-500 hover:underline">
                         Register here.
                     </Link>
                 </div>
