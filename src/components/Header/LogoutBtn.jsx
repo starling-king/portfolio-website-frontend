@@ -11,7 +11,9 @@ function LogoutBtn() {
         setIsLoggingOut(true);
         try {
             await adminServices.logoutUser();
-        } finally {
+        }catch (error) {
+            console.log("Backend session already cleared or unavailable.");
+         } finally {
             dispatch(logout());
         }
     };
