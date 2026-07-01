@@ -59,7 +59,7 @@ class AdminServices {
 
     async getCurrentUser() {
         try {
-            const response = await apiClient.get('/admin/getCurrentUser');
+            const response = await apiClient.get(`/admin/getCurrentUser?t=${new Date().getTime()}`);
             return response.data;
         } catch (error) {
             throw error;
