@@ -35,7 +35,7 @@ class AdminServices {
         }
     }
 
-    async logoutUser({ }) {
+    async logoutUser() {
         try {
             const response = await apiClient.post('/admin/logout');
             return response.data;
@@ -80,7 +80,7 @@ class AdminServices {
         }
     }
 
-    async refreshAccessToken({ }) {
+    async refreshAccessToken() {
         try {
             const response = await apiClient.post('/admin/refreshAccessToken');
             return response.data;
