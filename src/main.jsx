@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "../src/css/index.css";
 import App from "./App.jsx";
@@ -8,36 +7,53 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./components/Login";
 import Signin from "./components/Signin";
 import AdminAuthLayout from "./components/AdminAuthLayout";
+import Home from "./pages/Home";
+import Projects from "./pages/Projects";
 
+// main.jsx
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      {
-        path: "/login",
-        element: <Login />,
+      { 
+        index: true, 
+        element: <Home /> 
       },
-      {
-        path: "/signin",
-        element: <Signin />,
+      
+      // AUTH & ADMIN ROUTES (Independent of usernames)
+      { 
+        path: "login", 
+        element: <Login /> 
       },
-      {
-        path: "/dashboard",
+      { 
+        path: "signin", 
+        element: <Signin /> 
+      },
+      { 
+        path: "dashboard", 
         element: (
-            <AdminAuthLayout>
-                <div>Dashboard Component Goes Here</div> {/* Replace with <Dashboard /> */}
-            </AdminAuthLayout>
-        )
+          <AdminAuthLayout>
+            <div>Dashboard Component Goes Here</div> 
+          </AdminAuthLayout>
+        ) 
+      },
+
+      // MULTI-TENANT ROUTES 
+      { 
+        path: ":username", 
+        element: <Home /> 
+      },
+      { 
+        path: ":username/project", 
+        element: <Projects /> 
       }
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
-
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-
+  <Provider store={store}>
+    <RouterProvider router={router} />
+  </Provider>,
 );
