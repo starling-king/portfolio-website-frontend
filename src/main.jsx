@@ -9,27 +9,63 @@ import Signin from "./components/Signin";
 import AdminAuthLayout from "./components/AdminAuthLayout";
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
+import ProjectDetail from "./pages/ProjectDetail";
 
 // main.jsx
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <App />,
+//     children: [
+//       { 
+//         index: true, 
+//         element: <Home /> 
+//       },
+      
+//       // AUTH & ADMIN ROUTES (Independent of usernames)
+//       { 
+//         path: "login", 
+//         element: <Login /> 
+//       },
+//       { 
+//         path: "signin", 
+//         element: <Signin /> 
+//       },
+//       { 
+//         path: "dashboard", 
+//         element: (
+//           <AdminAuthLayout>
+//             <div>Dashboard Component Goes Here</div> 
+//           </AdminAuthLayout>
+//         ) 
+//       },
+
+//       // MULTI-TENANT ROUTES 
+//       { 
+//         path: ":username", 
+//         element: <Home /> 
+//       },
+//       { 
+//         path: ":username/project", 
+//         element: <Projects /> 
+//       }
+//     ],
+//   },
+// ]);
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      { 
-        index: true, 
-        element: <Home /> 
-      },
-      
-      // AUTH & ADMIN ROUTES (Independent of usernames)
-      { 
-        path: "login", 
-        element: <Login /> 
-      },
-      { 
-        path: "signin", 
-        element: <Signin /> 
-      },
+      // --- 1. ROOT DOMAIN (ayushdev.online) Defaults to your profile ---
+      { index: true, element: <Home /> },
+      { path: "project", element: <Projects /> },
+      { path: "project/:slug", element: <ProjectDetail /> }, // Detail page added
+
+      // --- 2. AUTH & ADMIN ROUTES ---
+      { path: "login", element: <Login /> },
+      { path: "signin", element: <Signin /> },
       { 
         path: "dashboard", 
         element: (
@@ -39,15 +75,10 @@ const router = createBrowserRouter([
         ) 
       },
 
-      // MULTI-TENANT ROUTES 
-      { 
-        path: ":username", 
-        element: <Home /> 
-      },
-      { 
-        path: ":username/project", 
-        element: <Projects /> 
-      }
+      // --- 3. MULTI-TENANT ROUTES (ayushdev.online/john) ---
+      { path: ":username", element: <Home /> },
+      { path: ":username/project", element: <Projects /> },
+      { path: ":username/project/:slug", element: <ProjectDetail /> } // Detail page added
     ],
   },
 ]);

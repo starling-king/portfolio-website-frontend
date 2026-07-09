@@ -1,6 +1,9 @@
 import React from 'react'
 
-function AdminProjectList() {
+function AdminProjectList({
+  className ="",
+  
+}) {
   return (
     <div>
       
