@@ -6,10 +6,25 @@ export default function PublicHeader() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  //get seprate array of the username and the endpoint this comment is written by me
+  const pathSegments = location.pathname.split('/').filter(Boolean);
+
+  //defining the system route if it is their or not written by me not ai 
+  const systemRoutes = ["login", "signin", "dashboard", "project", "contact"];
+  let tenantPrefix = "";
+
+  //If the first word in the URL is NOT a system route, it must be a user's name! written by me not ai
+  if (pathSegments.length > 0 && !systemRoutes.includes(pathSegments[0])) {
+      tenantPrefix = `/${pathSegments[0]}`; // e.g., "/john"
+  }
+
+// If the URL doesn't have a username (like on /login), check if they brought an invisible sticky note (state.tenant)
+  const activeTenant = tenantPrefix || location.state?.tenant || "";
+
   const navItems = [
-    { name: "Home", url: "/" },
-    { name: "Projects", url: "/project" },
-    { name: "Contact", url: "/contact" },
+    { name: "Home", url: activeTenant || "/" },
+    { name: "Projects", url: `${activeTenant}/project` },
+    { name: "Contact", url: `${activeTenant}/contact` },
   ];
 
  return (
