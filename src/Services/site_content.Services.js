@@ -24,7 +24,7 @@ class SiteContentServices {
             //     email: email,
             //     message: message
             // };
-            const response = await apiClient.get(`/admin/read/${user}`);
+            const response = await apiClient.get(`/content/read/${user}`);
             return response.data;
 
         } catch (error) {
