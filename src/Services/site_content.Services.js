@@ -19,11 +19,6 @@ class SiteContentServices {
 
     async read({ user }) {
         try {
-            // const payload = {
-            //     name: name,
-            //     email: email,
-            //     message: message
-            // };
             const response = await apiClient.get(`/content/read/${user}`);
             return response.data;
 

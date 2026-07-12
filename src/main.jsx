@@ -10,6 +10,7 @@ import AdminAuthLayout from "./components/AdminAuthLayout";
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
+import Contact from "./pages/Contact";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,8 @@ const router = createBrowserRouter([
       // --- 1. ROOT DOMAIN (ayushdev.online) Defaults to your profile ---
       { index: true, element: <Home /> },
       { path: "project", element: <Projects /> },
-      { path: "project/:slug", element: <ProjectDetail /> }, // Detail page added
+      { path: "project/:slug", element: <ProjectDetail /> },
+      { path: "contact", element: <Contact /> }, 
 
       // --- 2. AUTH & ADMIN ROUTES ---
       { path: "login", element: <Login /> },
@@ -36,7 +38,8 @@ const router = createBrowserRouter([
       // --- 3. MULTI-TENANT ROUTES (ayushdev.online/john) ---
       { path: ":username", element: <Home /> },
       { path: ":username/project", element: <Projects /> },
-      { path: ":username/project/:slug", element: <ProjectDetail /> } 
+      { path: ":username/project/:slug", element: <ProjectDetail /> } ,
+      { path: ":username/contact", element: <Contact /> }
     ],
   },
 ]);

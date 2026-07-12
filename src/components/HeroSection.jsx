@@ -5,7 +5,7 @@ function HeroSection({ name, role, aboutText, profilePhoto, username }) {
     const navigate = useNavigate();
     
     // Get the first letter for the fallback avatar (e.g., 'A' for Ayush)
-    const initial = (name || username || "D").charAt(0).toUpperCase();
+    const initial = (name || username || "A").charAt(0).toUpperCase();
 
     return (
         <section className="flex flex-col items-center justify-center min-h-[60vh] px-4 py-16 text-center">

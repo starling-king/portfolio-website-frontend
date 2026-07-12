@@ -34,6 +34,7 @@ class ContactMessageService {
 
 }
 
+
 const contactMessageService = new ContactMessageService();
 
 export default contactMessageService;
