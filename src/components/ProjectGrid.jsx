@@ -18,7 +18,7 @@ function ProjectGrid({ projects, targetUser }) {
                             description={project.description}
                             techStack={project.tech_stack}
                             category={project.category}
-                            featuredImage={project.images?.[0]} 
+                            featuredImage={project.image?.[0]?.imageUrl}
                             slug={project.slug}
                             username={targetUser}
                         />
