@@ -19,8 +19,8 @@ const router = createBrowserRouter([
     children: [
       // --- 1. ROOT DOMAIN (ayushdev.online) Defaults to your profile ---
       { index: true, element: <Home /> },
-      { path: "project", element: <Projects /> },
-      { path: "project/:slug", element: <ProjectDetail /> },
+      { path: "projects", element: <Projects /> }, 
+      { path: "project/:slug", element: <ProjectDetail /> }, 
       { path: "contact", element: <Contact /> }, 
 
       // --- 2. AUTH & ADMIN ROUTES ---
@@ -37,8 +37,8 @@ const router = createBrowserRouter([
 
       // --- 3. MULTI-TENANT ROUTES (ayushdev.online/john) ---
       { path: ":username", element: <Home /> },
-      { path: ":username/project", element: <Projects /> },
-      { path: ":username/project/:slug", element: <ProjectDetail /> } ,
+      { path: ":username/projects", element: <Projects /> }, 
+      { path: ":username/project/:slug", element: <ProjectDetail /> }, 
       { path: ":username/contact", element: <Contact /> }
     ],
   },
