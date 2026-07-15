@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    allProjects: [],       
+    allProjects: [],   
+    adminProjects: [],    
     activeProjectId: null, 
 };
 
@@ -12,6 +13,9 @@ const ProjectSlice = createSlice({
         // Run, when fetch all projects from the backend
         setAllProjects: (state, action) => {
             state.allProjects = action.payload;
+        },
+        setAdminProjects: (state, action) => {
+            state.adminProjects = action.payload;
         },
         // Run, when a user clicks on a specific project to view or edit it
         setActiveProject: (state, action) => {
@@ -25,5 +29,5 @@ const ProjectSlice = createSlice({
     }
 });
 
-export const { setAllProjects, setActiveProject, clearProjects } = ProjectSlice.actions;
+export const { setAllProjects,setAdminProjects, setActiveProject, clearProjects } = ProjectSlice.actions;
 export default ProjectSlice.reducer;

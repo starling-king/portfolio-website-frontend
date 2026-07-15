@@ -42,7 +42,7 @@
 //                         key={project._id}
 //                         title={project.title}
 //                         description={project.description}
-//                         techStack={project.tech_stack}
+//                         techStack={project.techStack}
 //                         category={project.category}
 //                         featuredImage={project.images?.[0]}
 //                         slug={project.slug}
@@ -119,7 +119,7 @@ function Projects() {
                         key={project._id}
                         title={project.title}
                         description={project.description}
-                        techStack={project.tech_stack}
+                        techStack={project.techStack}
                         category={project.category}
                         featuredImage={project.image?.[0]?.imageUrl} // Using your fixed image logic
                         slug={project.slug}

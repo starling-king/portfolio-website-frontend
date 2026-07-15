@@ -34,9 +34,9 @@ class ProjectServices {
         }
     }
 
-    async updateProject({ id }) {
+    async updateProject({ id, ...updatedData }) {
         try {
-            const response = await apiClient.patch(`/Projects/updateProject/${id}`);
+            const response = await apiClient.patch(`/Projects/updateProject/${id}`, updatedData);
             return response.data;
 
         } catch (error) {

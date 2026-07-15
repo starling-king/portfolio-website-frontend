@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import adminServices from '../Services/admin_users.Services.js';
 import { login, logout } from '../store/AuthSlice.js';
 
-function AdminAuthLayout({ children }) {
+function AdminAuthLayout() {
     const dispatch = useDispatch();
     
     const [loading, setLoading] = useState(true); 
@@ -48,7 +48,7 @@ function AdminAuthLayout({ children }) {
 
     if (!authStatus) return <Navigate to="/login" replace />;
 
-    return <>{children}</>;
+    return <Outlet />;
 }
 
 export default AdminAuthLayout;
