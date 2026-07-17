@@ -10,7 +10,15 @@ class ProjectImagesServices {
                 formData.append('images', imageFiles[i]);
             }
 
-            const response = await apiClient.post(`/images/projects/${projectId}/images`, formData);
+            const response = await apiClient.post(`/images/projects/${projectId}/images`, formData,
+                {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                withCredentials: true
+            }
+            );
+            
             return response.data;
 
         } catch (error) {

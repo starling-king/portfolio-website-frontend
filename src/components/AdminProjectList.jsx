@@ -79,7 +79,7 @@ function AdminProjectList() {
                     <p className="mt-2 text-slate-600">Manage your portfolio items, toggle visibility, and assign featured status.</p>
                 </div>
                 <button 
-                    onClick={() => navigate('/dashboard/projects/new')}
+                    onClick={() => navigate('/admin/projects/new')}
                     className="flex items-center px-4 py-2 font-medium text-white transition-colors bg-indigo-600 rounded-lg hover:bg-indigo-700"
                 >
                     Add New Project
@@ -129,7 +129,7 @@ function AdminProjectList() {
                                         </button>
                                     </td>
                                     <td className="px-6 py-4 text-right space-x-3">
-                                        <button onClick={() => navigate(`/dashboard/projects/edit/${project._id}`)} className="font-medium text-indigo-600 hover:underline">Edit</button>
+                                        <button onClick={() => navigate(`/admin/projects/edit/${project._id}`)} className="font-medium text-indigo-600 hover:underline">Edit</button>
                                         <button onClick={() => handleDelete(project._id)} className="font-medium text-red-600 hover:underline">Delete</button>
                                     </td>
                                 </tr>
