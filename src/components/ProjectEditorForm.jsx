@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import projectServices from "../Services/projects.Services";
-import projectImagesServices from "../Services/project_images.Services"; // Added Image Service
+import projectImagesServices from "../Services/project_images.Services"; 
+import { setAdminProjects } from '../store/ProjectSlice.js'; 
 
 function ProjectEditorForm() {
   const { id } = useParams();
@@ -36,6 +37,8 @@ function ProjectEditorForm() {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(isEditMode);
   const [error, setError] = useState("");
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isEditMode) {
@@ -86,40 +89,88 @@ function ProjectEditorForm() {
   };
 
   // --- 1. HANDLE TEXT DATA SUBMISSION ---
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   setError("");
 
-    try {
-      const techStackArray = formData.techStack
-        .split(",")
-        .map((tech) => tech.trim())
-        .filter((tech) => tech !== "");
+  //   try {
+  //     const techStackArray = formData.techStack
+  //       .split(",")
+  //       .map((tech) => tech.trim())
+  //       .filter((tech) => tech !== "");
 
-      const payload = { ...formData, techStack: techStackArray };
+  //     const payload = { ...formData, techStack: techStackArray };
 
-      if (isEditMode) {
-        // Update existing
-        await projectServices.updateProject({ id, ...payload });
-        navigate("/admin/projects");
-      } else {
-        // Create new
-        const response = await projectServices.createProject(payload);
-        // CRITICAL FIX: After creating, instantly redirect to the edit page so they can upload images
-        const newProjectId = response?.data?._id;
-        if (newProjectId) {
-          navigate(`/admin/projects/edit/${newProjectId}`);
-        } else {
-          navigate("/admin/projects");
+  //     if (isEditMode) {
+  //       // Update existing
+  //       await projectServices.updateProject({ id, ...payload });
+  //       navigate("/admin/projects");
+  //     } else {
+  //       // Create new
+  //       const response = await projectServices.createProject(payload);
+  //       // CRITICAL FIX: After creating, instantly redirect to the edit page so they can upload images
+  //       const newProjectId = response?.data?._id;
+  //       if (newProjectId) {
+  //         navigate(`/admin/projects/edit/${newProjectId}`);
+  //       } else {
+  //         navigate("/admin/projects");
+  //       }
+  //     }
+  //   } catch (err) {
+  //     setError(err.message || "Failed to save project.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // --- 1. HANDLE TEXT DATA SUBMISSION ---
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+
+        try {
+            const techStackArray = formData.techStack
+                .split(',')
+                .map(tech => tech.trim())
+                .filter(tech => tech !== '');
+
+            const payload = { ...formData, techStack: techStackArray };
+            
+            // <-- REMOVED THE DISPATCH LINE FROM HERE
+
+            if (isEditMode) {
+                // 1. Update existing project in the database
+                await projectServices.updateProject({ id, ...payload });
+                
+                // 2. RE-FETCH: Silently pull the fresh list and update Redux cache
+                const freshData = await projectServices.getAllAdminProjects({});
+                if (freshData?.data) dispatch(setAdminProjects(freshData.data));
+
+                navigate('/admin/projects'); 
+            } else {
+                // 1. Create new project in the database
+                const response = await projectServices.createProject(payload);
+                
+                // 2. RE-FETCH: Silently pull the fresh list and update Redux cache
+                const freshData = await projectServices.getAllAdminProjects({});
+                if (freshData?.data) dispatch(setAdminProjects(freshData.data));
+
+                // 3. Instantly redirect to the edit page so they can upload images
+                const newProjectId = response?.data?._id; 
+                if (newProjectId) {
+                    navigate(`/admin/projects/edit/${newProjectId}`);
+                } else {
+                    navigate('/admin/projects');
+                }
+            }
+        } catch (err) {
+            setError(err.message || "Failed to save project.");
+        } finally {
+            setLoading(false);
         }
-      }
-    } catch (err) {
-      setError(err.message || "Failed to save project.");
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
   // --- 2. HANDLE IMAGE UPLOAD (Only available in Edit Mode) ---
   const handleImageUpload = async () => {

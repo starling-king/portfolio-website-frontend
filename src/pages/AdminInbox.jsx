@@ -18,11 +18,20 @@ function AdminInbox() {
                 setMessages(newMessages);
             } catch (err) {
                 
-                if (err?.response?.status === 404 || err?.message?.includes("404")) {
+                // if (err?.response?.status === 404 || err?.message?.includes("404")) {
+                //     setMessages([]);
+                // } else {
+                //     setError('Failed to load messages. Please check your connection.');
+                // }
+
+                const backendMessage = err?.response?.data?.message || "";
+                if (backendMessage.includes("Zero Message") || err?.response?.status === 404) {
                     setMessages([]);
+                    setError(''); 
                 } else {
-                    setError('Failed to load messages. Please check your connection.');
+                    setError('Their is Zero Messages');
                 }
+
             } finally {
                 setLoading(false);
             }
