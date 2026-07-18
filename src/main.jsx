@@ -18,6 +18,7 @@ import AdminAuthLayout from "./components/AdminAuthLayout";
 import AdminProjectList from "./components/AdminProjectList.jsx";
 import ProjectEditorForm from "./components/ProjectEditorForm.jsx";
 import AdminInbox from "./pages/AdminInbox.jsx";
+import Admin from "./pages/Admin.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,9 @@ const router = createBrowserRouter([
         path: "admin", 
         element: <AdminAuthLayout />, 
         children: [
-            { index: true, element: <div className="p-8 text-xl font-bold text-slate-800">Overall Admin Dashboard Goes Here</div> }, 
+            { index: true, element: <Admin /> },
+
+            { path: "dashboard", element: <Admin /> },
             
             
             {

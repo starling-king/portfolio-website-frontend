@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 import adminServices from '../Services/admin_users.Services.js';
 import { login, logout } from '../store/AuthSlice.js';
+import projectServices from '../Services/projects.Services.js';
+import { setAdminProjects } from '../store/ProjectSlice.js';
 
 function AdminAuthLayout() {
     const dispatch = useDispatch();
@@ -28,7 +30,20 @@ function AdminAuthLayout() {
                 .finally(() => setLoading(false));
                 
         } else {
-            setLoading(false);
+            // setLoading(false);
+            projectServices.getAllAdminProjects({})
+                .then(res => {
+                    if (res?.data) {
+                        dispatch(setAdminProjects(res.data));
+                    }
+                })
+                .catch(err => {
+                    console.error("Failed to preload admin projects", err);
+                    if (err?.response?.status === 401 || err?.message?.includes("401")) {
+                        dispatch(logout());
+                    }
+                })
+                .finally(() => setLoading(false));
         }
     }, [authStatus, dispatch]);
 

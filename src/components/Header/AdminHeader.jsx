@@ -7,7 +7,7 @@ export default function AdminHeader() {
   const location = useLocation();
 
   const adminNavItems = [
-    { name: "Dashboard", url: "/dashboard" },
+    { name: "Dashboard", url: "/admin/dashboard" },
     { name: "Projects", url: "/admin/projects" },
     { name: "Inbox", url: "/admin/messages" },
   ];

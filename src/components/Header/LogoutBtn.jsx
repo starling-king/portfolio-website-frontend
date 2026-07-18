@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import adminServices from '../../Services/admin_users.Services.js';
 import { logout } from '../../store/AuthSlice.js';
+import { clearProjects } from '../../store/ProjectSlice.js';
+import { useNavigate } from 'react-router-dom';
 
 function LogoutBtn() {
     const dispatch = useDispatch();
     const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const navigate = useNavigate();
 
     const logoutHandler = async () => {
         setIsLoggingOut(true);
@@ -14,7 +17,9 @@ function LogoutBtn() {
         }catch (error) {
             console.log("Backend session already cleared or unavailable.");
         } finally {
+            dispatch(clearProjects());
             dispatch(logout());
+            navigate('/login', { replace: true });
         }
     };
 

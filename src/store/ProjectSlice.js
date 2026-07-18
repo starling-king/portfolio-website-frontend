@@ -24,6 +24,7 @@ const ProjectSlice = createSlice({
         // Clear project data on logout
         clearProjects: (state) => {
             state.allProjects = [];
+            state.adminProjects = [];
             state.activeProjectId = null;
         }
     }

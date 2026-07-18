@@ -39,7 +39,7 @@ function Login() {
 
     useEffect(() => {
     if (authStatus && !loading) {
-        navigate('/dashboard', { replace: true }); 
+        navigate('/admin/dashboard', { replace: true }); 
     }
 }, [authStatus, navigate,loading]);
 
