@@ -9,7 +9,7 @@ class SiteContentServices {
                 contentValue,
                 contentType
             };
-            const response = await apiClient.post('/admin/writeContent', payload);
+            const response = await apiClient.post('/content/writeContent', payload);
             return response.data;
 
         } catch (error) {

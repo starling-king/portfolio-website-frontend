@@ -19,6 +19,7 @@ import AdminProjectList from "./components/AdminProjectList.jsx";
 import ProjectEditorForm from "./components/ProjectEditorForm.jsx";
 import AdminInbox from "./pages/AdminInbox.jsx";
 import Admin from "./pages/Admin.jsx";
+import ProfileSettings from "./pages/ProfileSettings.jsx";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
             { index: true, element: <Admin /> },
 
             { path: "dashboard", element: <Admin /> },
+            { path: "profile", element: <ProfileSettings /> },
             
             
             {

@@ -10,6 +10,7 @@ export default function AdminHeader() {
     { name: "Dashboard", url: "/admin/dashboard" },
     { name: "Projects", url: "/admin/projects" },
     { name: "Inbox", url: "/admin/messages" },
+    { name: "Profile", url: "/admin/profile" },
   ];
 
 return (
