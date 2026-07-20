@@ -40,28 +40,52 @@ function ContentManager() {
     //     loadContent();
     // }, [currentUser?.username]);
 
-    useEffect(() => {
+   useEffect(() => {
         const loadContent = async () => {
             try {
                 if (currentUser?.username) {
                     const res = await siteContentServices.read({ user: currentUser.username });
                     
                     if (res?.data && Array.isArray(res.data)) {
-                        let savedLayout = ['hero', 'skills', 'projects']; // Default
+                        let savedLayout = ['hero', 'skills', 'projects']; 
                         const blocks = {};
 
-                        // 1. First, find the layout
+                        // 1. First, find the layout safely
                         const layoutItem = res.data.find(item => item.sectionKey === 'page_layout');
                         if (layoutItem) {
-                            savedLayout = JSON.parse(layoutItem.contentValue);
+                            try {
+                                savedLayout = JSON.parse(layoutItem.contentValue);
+                            } catch (e) {
+                                console.error("Layout parse error", e);
+                            }
                         }
 
-                        // 2. Extract all custom blocks
+                        // 2. Extract custom blocks WITH SANITIZATION
                         res.data.forEach(item => {
                             if (item.sectionKey.startsWith('custom_')) {
-                                blocks[item.sectionKey] = JSON.parse(item.contentValue);
+                                try {
+                                    // Sanitize hidden newlines before parsing
+                                    let sanitized = item.contentValue
+                                        .replace(/\n/g, "\\n")
+                                        .replace(/\r/g, "\\r")
+                                        .replace(/\t/g, "\\t");
+                                    
+                                    let parsed = sanitized;
+                                    let attempt = 0;
+                                    
+                                    // Safely unwrap Mongoose double-strings
+                                    while (typeof parsed === 'string' && parsed.trim().startsWith('{') && attempt < 3) {
+                                        parsed = JSON.parse(parsed);
+                                        attempt++;
+                                    }
+                                    
+                                    blocks[item.sectionKey] = parsed;
+                                } catch (e) {
+                                    // Failsafe: if it completely crashes, load it as text so it doesn't break the UI
+                                    blocks[item.sectionKey] = { title: 'Recovered Section', htmlText: item.contentValue, cards: [] };
+                                }
                                 
-                                // THE FIX: If the custom block exists but isn't in the layout, add it!
+                                // Ensure it stays in the layout
                                 if (!savedLayout.includes(item.sectionKey)) {
                                     savedLayout.push(item.sectionKey);
                                 }
