@@ -651,7 +651,12 @@ import conf from '../config/config.js';
 
 function ContentManager() {
     const authData = useSelector((state) => state.AuthReducer.data);
-    const currentUser = authData?.user || authData;
+   const currentUser = 
+        authData?.data?.data?.user || 
+        authData?.data?.data ||       
+        authData?.data?.user ||       
+        authData?.user ||            
+        authData;
 
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -660,154 +665,154 @@ function ContentManager() {
     const [layoutOrder, setLayoutOrder] = useState(['hero', 'skills', 'projects']);
     const [customBlocks, setCustomBlocks] = useState({});
     
-    // NEW DSA STATE: Tracks which section is currently dropped down for editing
+    
     const [expandedSection, setExpandedSection] = useState(null); 
 
-    // useEffect(() => {
-    //     const loadContent = async () => {
-    //         try {
-    //             if (currentUser?.username) {
-    //                 const res = await siteContentServices.read({ user: currentUser.username });
+    useEffect(() => {
+        const loadContent = async () => {
+            try {
+                if (currentUser?.username) {
+                    const res = await siteContentServices.read({ user: currentUser.username });
                     
-    //                 if (res?.data && Array.isArray(res.data)) {
-    //                     let savedLayout = ['hero', 'skills', 'projects']; 
-    //                     const blocks = {};
+                    if (res?.data && Array.isArray(res.data)) {
+                        let savedLayout = ['hero', 'skills', 'projects']; 
+                        const blocks = {};
 
-    //                     const layoutItem = res.data.find(item => item.sectionKey === 'page_layout');
-    //                     if (layoutItem) {
-    //                         try {
-    //                             savedLayout = JSON.parse(layoutItem.contentValue);
-    //                         } catch (e) {
-    //                             console.error("Layout parse error", e);
-    //                         }
-    //                     }
+                        const layoutItem = res.data.find(item => item.sectionKey === 'page_layout');
+                        if (layoutItem) {
+                            try {
+                                savedLayout = JSON.parse(layoutItem.contentValue);
+                            } catch (e) {
+                                console.error("Layout parse error", e);
+                            }
+                        }
 
-    //                     res.data.forEach(item => {
-    //                         if (item.sectionKey.startsWith('custom_')) {
-    //                             try {
-    //                                 let sanitized = item.contentValue
-    //                                     .replace(/\n/g, "\\n")
-    //                                     .replace(/\r/g, "\\r")
-    //                                     .replace(/\t/g, "\\t");
+                        res.data.forEach(item => {
+                            if (item.sectionKey.startsWith('custom_')) {
+                                try {
+                                    let sanitized = item.contentValue
+                                        .replace(/\n/g, "\\n")
+                                        .replace(/\r/g, "\\r")
+                                        .replace(/\t/g, "\\t");
                                     
-    //                                 let parsed = sanitized;
-    //                                 let attempt = 0;
+                                    let parsed = sanitized;
+                                    let attempt = 0;
                                     
-    //                                 while (typeof parsed === 'string' && parsed.trim().startsWith('{') && attempt < 3) {
-    //                                     parsed = JSON.parse(parsed);
-    //                                     attempt++;
-    //                                 }
+                                    while (typeof parsed === 'string' && parsed.trim().startsWith('{') && attempt < 3) {
+                                        parsed = JSON.parse(parsed);
+                                        attempt++;
+                                    }
                                     
-    //                                 blocks[item.sectionKey] = parsed;
-    //                             } catch (e) {
-    //                                 blocks[item.sectionKey] = { title: 'Recovered Section', htmlText: item.contentValue, cards: [] };
-    //                             }
-    //                         }
-    //                     });
+                                    blocks[item.sectionKey] = parsed;
+                                } catch (e) {
+                                    blocks[item.sectionKey] = { title: 'Recovered Section', htmlText: item.contentValue, cards: [] };
+                                }
+                            }
+                        });
 
-    //                     setLayoutOrder(savedLayout);
-    //                     setCustomBlocks(blocks);
-    //                 }
-    //             }
-    //         } catch (error) {
-    //             console.error("Failed to load content manager data", error);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-    //     loadContent();
-    // }, [currentUser]);
+                        setLayoutOrder(savedLayout);
+                        setCustomBlocks(blocks);
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to load content manager data", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadContent();
+    }, [currentUser]);
 
     // --- REARRANGEMENT ALGORITHM ---
     
-    useEffect(() => {
-    const loadContent = async () => {
-        // CHECK 1: Check Redux state before anything else
-        console.log("🔍 CHECK 1: currentUser state ->", currentUser);
-        console.log("🔍 CHECK 1.1: currentUser?.username ->", currentUser?.username);
+//     useEffect(() => {
+//     const loadContent = async () => {
+//             console.log("🔍 CHECK 0: auth data ->", authData);
+//         console.log("🔍 CHECK 1: currentUser state ->", currentUser);
+//         console.log("🔍 CHECK 1.1: currentUser?.username ->", currentUser?.username);
 
-        try {
-            if (currentUser?.username) {
-                console.log("📡 CHECK 2: Username exists! Calling siteContentServices.read for ->", currentUser.username);
+//         try {
+//             if (currentUser?.username) {
+//                 console.log("📡 CHECK 2: Username exists! Calling siteContentServices.read for ->", currentUser.username);
                 
-                const res = await siteContentServices.read({ user: currentUser.username });
+//                 const res = await siteContentServices.read({ user: currentUser.username });
                 
-                // CHECK 3: Inspect raw API response structure
-                console.log("📦 CHECK 3: Raw response object ->", res);
-                console.log("📦 CHECK 3.1: res?.data ->", res?.data);
-                console.log("📦 CHECK 3.2: Is res?.data an Array? ->", Array.isArray(res?.data));
+//                 // CHECK 3: Inspect raw API response structure
+//                 console.log("📦 CHECK 3: Raw response object ->", res);
+//                 console.log("📦 CHECK 3.1: res?.data ->", res?.data);
+//                 console.log("📦 CHECK 3.2: Is res?.data an Array? ->", Array.isArray(res?.data));
 
-                if (res?.data && Array.isArray(res.data)) {
-                    let savedLayout = ['hero', 'skills', 'projects']; 
-                    const blocks = {};
+//                 if (res?.data && Array.isArray(res.data)) {
+//                     let savedLayout = ['hero', 'skills', 'projects']; 
+//                     const blocks = {};
 
-                    // CHECK 4: Layout Extraction
-                    const layoutItem = res.data.find(item => item.sectionKey === 'page_layout');
-                    console.log("🗺️ CHECK 4: Found 'page_layout' item in DB ->", layoutItem);
+//                     // CHECK 4: Layout Extraction
+//                     const layoutItem = res.data.find(item => item.sectionKey === 'page_layout');
+//                     console.log("🗺️ CHECK 4: Found 'page_layout' item in DB ->", layoutItem);
 
-                    if (layoutItem) {
-                        try {
-                            savedLayout = JSON.parse(layoutItem.contentValue);
-                            console.log("✅ CHECK 4.1: Parsed layoutOrder successfully ->", savedLayout);
-                        } catch (e) {
-                            console.error("❌ CHECK 4.2: Layout parse error ->", e);
-                        }
-                    } else {
-                        console.warn("⚠️ CHECK 4.3: No 'page_layout' record found! Falling back to defaults ->", savedLayout);
-                    }
+//                     if (layoutItem) {
+//                         try {
+//                             savedLayout = JSON.parse(layoutItem.contentValue);
+//                             console.log("✅ CHECK 4.1: Parsed layoutOrder successfully ->", savedLayout);
+//                         } catch (e) {
+//                             console.error("❌ CHECK 4.2: Layout parse error ->", e);
+//                         }
+//                     } else {
+//                         console.warn("⚠️ CHECK 4.3: No 'page_layout' record found! Falling back to defaults ->", savedLayout);
+//                     }
 
-                    // CHECK 5: Custom Blocks Processing
-                    console.log("⚙️ CHECK 5: Processing custom sections...");
-                    res.data.forEach((item, index) => {
-                        if (item.sectionKey.startsWith('custom_')) {
-                            console.log(`🧩 CHECK 5.${index}: Found custom section [${item.sectionKey}] -> Raw:`, item.contentValue);
+//                     // CHECK 5: Custom Blocks Processing
+//                     console.log("⚙️ CHECK 5: Processing custom sections...");
+//                     res.data.forEach((item, index) => {
+//                         if (item.sectionKey.startsWith('custom_')) {
+//                             console.log(`🧩 CHECK 5.${index}: Found custom section [${item.sectionKey}] -> Raw:`, item.contentValue);
                             
-                            try {
-                                let sanitized = item.contentValue
-                                    .replace(/\n/g, "\\n")
-                                    .replace(/\r/g, "\\r")
-                                    .replace(/\t/g, "\\t");
+//                             try {
+//                                 let sanitized = item.contentValue
+//                                     .replace(/\n/g, "\\n")
+//                                     .replace(/\r/g, "\\r")
+//                                     .replace(/\t/g, "\\t");
                                 
-                                let parsed = sanitized;
-                                let attempt = 0;
+//                                 let parsed = sanitized;
+//                                 let attempt = 0;
                                 
-                                while (typeof parsed === 'string' && parsed.trim().startsWith('{') && attempt < 3) {
-                                    parsed = JSON.parse(parsed);
-                                    attempt++;
-                                }
+//                                 while (typeof parsed === 'string' && parsed.trim().startsWith('{') && attempt < 3) {
+//                                     parsed = JSON.parse(parsed);
+//                                     attempt++;
+//                                 }
                                 
-                                blocks[item.sectionKey] = parsed;
-                                console.log(`✅ CHECK 5.${index} Succeeded: Parsed block [${item.sectionKey}] ->`, parsed);
-                            } catch (e) {
-                                console.error(`❌ CHECK 5.${index} Failed: Parsing crashed for [${item.sectionKey}] ->`, e);
-                                blocks[item.sectionKey] = { title: 'Recovered Section', htmlText: item.contentValue, cards: [] };
-                            }
-                        }
-                    });
+//                                 blocks[item.sectionKey] = parsed;
+//                                 console.log(`✅ CHECK 5.${index} Succeeded: Parsed block [${item.sectionKey}] ->`, parsed);
+//                             } catch (e) {
+//                                 console.error(`❌ CHECK 5.${index} Failed: Parsing crashed for [${item.sectionKey}] ->`, e);
+//                                 blocks[item.sectionKey] = { title: 'Recovered Section', htmlText: item.contentValue, cards: [] };
+//                             }
+//                         }
+//                     });
 
-                    // CHECK 6: Final React State Commit
-                    console.log("🚀 CHECK 6: Updating React States:");
-                    console.log("   -> Setting layoutOrder to:", savedLayout);
-                    console.log("   -> Setting customBlocks to:", blocks);
+//                     // CHECK 6: Final React State Commit
+//                     console.log("🚀 CHECK 6: Updating React States:");
+//                     console.log("   -> Setting layoutOrder to:", savedLayout);
+//                     console.log("   -> Setting customBlocks to:", blocks);
 
-                    setLayoutOrder(savedLayout);
-                    setCustomBlocks(blocks);
-                } else {
-                    console.warn("⚠️ CHECK 3.3: res?.data is NOT an array or is empty!");
-                }
-            } else {
-                console.warn("🛑 CHECK 1.2: currentUser?.username is falsy! Skipping API call.");
-            }
-        } catch (error) {
-            console.error("💥 CRITICAL ERROR in loadContent ->", error);
-        } finally {
-            console.log("🏁 CHECK FINAL: Turning off loading spinner (setLoading(false)).");
-            setLoading(false);
-        }
-    };
+//                     setLayoutOrder(savedLayout);
+//                     setCustomBlocks(blocks);
+//                 } else {
+//                     console.warn("⚠️ CHECK 3.3: res?.data is NOT an array or is empty!");
+//                 }
+//             } else {
+//                 console.warn("🛑 CHECK 1.2: currentUser?.username is falsy! Skipping API call.");
+//             }
+//         } catch (error) {
+//             console.error("💥 CRITICAL ERROR in loadContent ->", error);
+//         } finally {
+//             console.log("🏁 CHECK FINAL: Turning off loading spinner (setLoading(false)).");
+//             setLoading(false);
+//         }
+//     };
 
-    loadContent();
-}, [currentUser]);
+//     loadContent();
+// }, [currentUser]);
 
     // useEffect(() => {
     //     // --- THE WAITING ROOM ---
