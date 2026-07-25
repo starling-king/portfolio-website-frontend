@@ -651,7 +651,7 @@ import conf from '../config/config.js';
 
 function ContentManager() {
     const authData = useSelector((state) => state.AuthReducer.data);
-    const currentUser = authData?.user;
+    const currentUser = authData?.user || authData;
 
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -716,7 +716,7 @@ function ContentManager() {
     //         }
     //     };
     //     loadContent();
-    // }, [currentUser?.username]);
+    // }, [currentUser]);
 
     // --- REARRANGEMENT ALGORITHM ---
     
@@ -807,7 +807,90 @@ function ContentManager() {
     };
 
     loadContent();
-}, [currentUser?.username]);
+}, [currentUser]);
+
+    // useEffect(() => {
+    //     // --- THE WAITING ROOM ---
+    //     // If Redux is empty, we RETURN EARLY. 
+    //     // We do NOT hit the finally block, so the spinner keeps spinning!
+    //     if (!currentUser?.username) {
+    //         console.log("⏳ CHECK 0: Redux is empty. Waiting for getCurrentUser to finish...");
+    //         return; 
+    //     }
+
+    //     // --- THE FACTORY FETCH ---
+    //     const loadContent = async () => {
+    //         console.log("🔍 CHECK 1: currentUser state ->", currentUser);
+    //         console.log("📡 CHECK 2: Username exists! Calling siteContentServices.read for ->", currentUser.username);
+            
+    //         try {
+    //             const res = await siteContentServices.read({ user: currentUser.username });
+                
+    //             console.log("📦 CHECK 3: Raw response object ->", res);
+    //             console.log("📦 CHECK 3.2: Is res?.data an Array? ->", Array.isArray(res?.data));
+
+    //             if (res?.data && Array.isArray(res.data)) {
+    //                 let savedLayout = ['hero', 'skills', 'projects']; 
+    //                 const blocks = {};
+
+    //                 const layoutItem = res.data.find(item => item.sectionKey === 'page_layout');
+    //                 console.log("🗺️ CHECK 4: Found 'page_layout' item in DB ->", layoutItem);
+
+    //                 if (layoutItem) {
+    //                     try {
+    //                         savedLayout = JSON.parse(layoutItem.contentValue);
+    //                         console.log("✅ CHECK 4.1: Parsed layoutOrder successfully ->", savedLayout);
+    //                     } catch (e) {
+    //                         console.error("❌ CHECK 4.2: Layout parse error ->", e);
+    //                     }
+    //                 } else {
+    //                     console.warn("⚠️ CHECK 4.3: No 'page_layout' record found! Falling back to defaults.");
+    //                 }
+
+    //                 console.log("⚙️ CHECK 5: Processing custom sections...");
+    //                 res.data.forEach((item, index) => {
+    //                     if (item.sectionKey.startsWith('custom_')) {
+    //                         console.log(`🧩 CHECK 5.${index}: Found custom section [${item.sectionKey}]`);
+                            
+    //                         try {
+    //                             let sanitized = item.contentValue
+    //                                 .replace(/\n/g, "\\n")
+    //                                 .replace(/\r/g, "\\r")
+    //                                 .replace(/\t/g, "\\t");
+                                
+    //                             let parsed = sanitized;
+    //                             let attempt = 0;
+                                
+    //                             while (typeof parsed === 'string' && parsed.trim().startsWith('{') && attempt < 3) {
+    //                                 parsed = JSON.parse(parsed);
+    //                                 attempt++;
+    //                             }
+                                
+    //                             blocks[item.sectionKey] = parsed;
+    //                         } catch (e) {
+    //                             console.error(`❌ CHECK 5.${index} Failed: Parsing crashed for [${item.sectionKey}] ->`, e);
+    //                             blocks[item.sectionKey] = { title: 'Recovered Section', htmlText: item.contentValue, cards: [] };
+    //                         }
+    //                     }
+    //                 });
+
+    //                 console.log("🚀 CHECK 6: Updating React States with data.");
+    //                 setLayoutOrder(savedLayout);
+    //                 setCustomBlocks(blocks);
+    //             } else {
+    //                 console.warn("⚠️ CHECK 3.3: res?.data is NOT an array or is empty!");
+    //             }
+    //         } catch (error) {
+    //             console.error("💥 CRITICAL ERROR in loadContent ->", error);
+    //         } finally {
+    //             // The spinner only turns off AFTER the fetch is complete
+    //             console.log("🏁 CHECK FINAL: Turning off loading spinner.");
+    //             setLoading(false);
+    //         }
+    //     };
+
+    //     loadContent();
+    // }, [currentUser]);
 
     const moveItem = (index, direction) => {
         const newLayout = [...layoutOrder];
