@@ -19,15 +19,39 @@ function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-useEffect(() => {
-        if (authStatus && !loading) {
+// useEffect(() => {
+//         if (authStatus && !loading) {
+//             navigate('/admin/dashboard', { replace: true });
+//         } else {
+//             adminServices.getCurrentUser()
+//                 .then((userData) => {
+//                     if (userData) {
+//                         const pureUser = userData?.data?.user || userData?.data || userData;
+//                         dispatch(login({ pureUser }));
+//                         navigate('/admin/dashboard', { replace: true });
+//                     } else {
+//                         setIsCheckingSession(false);
+//                     }
+//                 })
+//                 .catch(() => {
+//                     setIsCheckingSession(false);
+//                 });
+//         }
+//     }, [authStatus, navigate, dispatch, loading]);
+
+    useEffect(() => {
+        
+        if (authStatus) {
             navigate('/admin/dashboard', { replace: true });
-        } else {
-            // Silently check the backend for a valid HttpOnly cookie
+            return; 
+        }
+
+        if (isCheckingSession) {
             adminServices.getCurrentUser()
                 .then((userData) => {
                     if (userData) {
-                        dispatch(login({ data: userData }));
+                        const pureUser = userData?.data?.user || userData?.data || userData;
+                        dispatch(login(pureUser)); 
                         navigate('/admin/dashboard', { replace: true });
                     } else {
                         setIsCheckingSession(false);
@@ -37,7 +61,7 @@ useEffect(() => {
                     setIsCheckingSession(false);
                 });
         }
-    }, [authStatus, navigate, dispatch, loading]);
+    }, [authStatus, navigate, dispatch, isCheckingSession]);
 
     const loginHandler = async (e) => {
         e.preventDefault();
@@ -48,7 +72,8 @@ useEffect(() => {
             const response = await adminServices.login({ name, password });
 
             if (response && response.data) {
-                dispatch(login({ data: response.data }));
+                const pureUser = response.data?.data?.user || response.data?.data || response.data;
+                dispatch(login(pureUser));
             }
         } catch (error) {
             setError(error.message || "Login failed. Please check your credentials.");
@@ -57,13 +82,6 @@ useEffect(() => {
         }
     }
 
-    // const authStatus = useSelector((state) => state.AuthReducer.status);
-
-//     useEffect(() => {
-//     if (authStatus && !loading) {
-//         navigate('/admin/dashboard', { replace: true }); 
-//     }
-// }, [authStatus, navigate,loading]);
 
 if (isCheckingSession) {
         return (

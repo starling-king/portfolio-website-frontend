@@ -22,26 +22,6 @@ function Signin() {
 
     const navigate = useNavigate();
 
-//    useEffect(() => {
-//         if (authStatus) {
-//             navigate('/admin/dashboard', { replace: true });
-//         } else {
-//             // Silently check the backend for a valid HttpOnly cookie
-//             adminServices.getCurrentUser()
-//                 .then((userData) => {
-//                     if (userData) {
-//                         dispatch(login({ data: userData }));
-//                         navigate('/admin/dashboard', { replace: true });
-//                     } else {
-//                         setIsCheckingSession(false);
-//                     }
-//                 })
-//                 .catch(() => {
-//                     setIsCheckingSession(false);
-//                 });
-//         }
-//     }, [authStatus, navigate, dispatch]);
-
     useEffect(() => {
         if (authStatus) {
             navigate('/admin/dashboard', { replace: true });
@@ -50,7 +30,8 @@ function Signin() {
             adminServices.getCurrentUser()
                 .then((userData) => {
                     if (userData) {
-                        dispatch(login({ data: userData }));
+                        const pureUser = userData?.data?.user || userData?.data || userData;
+                        dispatch(login(pureUser));
                         navigate('/admin/dashboard', { replace: true });
                     } else {
                         setIsCheckingSession(false);

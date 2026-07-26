@@ -19,7 +19,8 @@ function AdminAuthLayout() {
             adminServices.getCurrentUser()
                 .then((userData) => {
                     if (userData) {
-                        dispatch(login({ data: userData }));
+                    const pureUser = userData?.data?.user || userData?.data || userData;
+                        dispatch(login(pureUser)); 
                     } else {
                         dispatch(logout());
                     }
