@@ -116,10 +116,24 @@ function Home() {
                 aboutText={content.aboutText} profilePhoto={content.profilePhotoUrl} username={targetUser}/>;
             case 'projects':
                 return <Component key={index} projects={projects} targetUser={targetUser} />;
+
             case 'skills':
-                return <Component key={index} skillsArray={JSON.parse(content.skills || '[]')} />;
-            case 'custom':
+                const allSkills = projects.flatMap(p => p.technologies || p.techStack || []);
                 
+                let parsedSkills = [];
+                allSkills.forEach(skill => {
+                    if (typeof skill === 'string') {
+                        parsedSkills.push(...skill.split(',').map(s => s.trim()));
+                    } else {
+                        parsedSkills.push(skill);
+                    }
+                });
+                
+                const uniqueSkills = [...new Set(parsedSkills)].filter(Boolean);
+
+                return <Component key={index} skillsArray={uniqueSkills} />;
+
+            case 'custom':
                 return <Component key={index} htmlContent={content[sectionKey]} />;
             default:
                 return null;
