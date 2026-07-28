@@ -32,7 +32,7 @@ function HeroSection({ name, role, aboutText, profilePhoto, username }) {
             </p>
             <div className="flex gap-4 mt-8">
                 <button 
-                    onClick={() => navigate(username ? `/${username}/project` : '/project')}
+                    onClick={() => navigate(username ? `/${username}/projects` : '/projects')}
                     className="px-6 py-3 font-medium text-white transition-colors bg-indigo-600 rounded-lg hover:bg-indigo-700"
                 >
                     View Projects

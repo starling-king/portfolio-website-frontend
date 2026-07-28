@@ -22,33 +22,63 @@ function ResumePreview({ resumeData }) {
         window.print();
     };
 
-    return (
-        <div className="w-full flex flex-col items-center py-8 bg-slate-100 min-h-screen">
-            {/* Action Bar */}
-            <div className="mb-6 flex gap-4 print:hidden">
-                <button
-                    onClick={handlePrint}
-                    className="px-6 py-2.5 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 shadow-md transition-all flex items-center gap-2"
-                >
-                    <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                        />
-                    </svg>
-                    Download PDF
-                </button>
-            </div>
+    // return (
+    //     <div className="w-full flex flex-col items-center py-8 bg-slate-100 min-h-screen">
+    //         {/* Action Bar */}
+    //         <div className="mb-6 flex gap-4 print:hidden">
+    //             <button
+    //                 onClick={handlePrint}
+    //                 className="px-6 py-2.5 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 shadow-md transition-all flex items-center gap-2"
+    //             >
+    //                 <svg
+    //                     className="w-5 h-5"
+    //                     fill="none"
+    //                     stroke="currentColor"
+    //                     viewBox="0 0 24 24"
+    //                 >
+    //                     <path
+    //                         strokeLinecap="round"
+    //                         strokeLinejoin="round"
+    //                         strokeWidth="2"
+    //                         d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+    //                     />
+    //                 </svg>
+    //                 Download PDF
+    //             </button>
+    //         </div>
 
-            {/* A4 Paper Canvas */}
-            <div className="w-[210mm] min-h-[297mm] bg-white shadow-2xl p-10 text-slate-800 font-sans leading-relaxed print:shadow-none print:w-full print:p-0">
+    //         {/* A4 Paper Canvas */}
+    //         <div className="w-[210mm] min-h-[297mm] bg-white shadow-2xl p-10 text-slate-800 font-sans leading-relaxed print:shadow-none print:w-full print:p-0">
+
+    return (
+        <>
+            {/* Hides the default browser URL and Date headers on the printed PDF */}
+            <style>{`
+                @media print {
+                    @page { margin: 0; }
+                    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; background-color: white; }
+                }
+            `}</style>
+
+            {/* Added strict print:absolute and print:z-[9999] to cover the admin sidebar */}
+            <div className="w-full flex flex-col items-center py-8 bg-slate-100 min-h-screen print:block print:absolute print:inset-0 print:bg-white print:z-50 print:py-0">
+                
+                {/* Action Bar */}
+                <div className="mb-6 flex gap-4 print:hidden">
+                    <button
+                        onClick={handlePrint}
+                        className="px-6 py-2.5 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 shadow-md transition-all flex items-center gap-2"
+                    >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Download PDF
+                    </button>
+                </div>
+
+                {/* A4 Paper Canvas */}
+                <div className="w-[210mm] min-h-[297mm] bg-white shadow-2xl p-12 text-slate-800 font-sans leading-relaxed print:shadow-none print:w-full print:m-0 print:p-12">
+                    
                 {/* Header */}
                 <header className="border-b-2 border-slate-900 pb-4 mb-6 text-center">
                     <h1 className="text-3xl font-extrabold uppercase tracking-wider text-slate-900">
@@ -238,7 +268,9 @@ function ResumePreview({ resumeData }) {
                 )}
             </div>
         </div>
+    </>
     );
+
 }
 
 export default ResumePreview;
