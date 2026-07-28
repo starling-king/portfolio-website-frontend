@@ -23,36 +23,57 @@ function LogoutBtn() {
     }
   };
 
-  return (
+  // return (
+  //   <button
+  //     onClick={logoutHandler}
+  //     disabled={isLoggingOut}
+  //     className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-slate-300 transition-all duration-200 rounded hover:text-red-400 hover:bg-slate-800 disabled:opacity-50"
+  //     title="Terminate Session"
+  //   >
+  //     {isLoggingOut ? (
+  //       <span className="animate-pulse">Exiting...</span>
+  //     ) : (
+  //       <>
+  //         <svg
+  //           className="w-4 h-4"
+  //           fill="none"
+  //           stroke="currentColor"
+  //           viewBox="0 0 24 24"
+  //         >
+  //           <path
+  //             strokeLinecap="round"
+  //             strokeLinejoin="round"
+  //             strokeWidth="2"
+  //             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+  //           />
+  //         </svg>
+
+  //         <span className="hidden sm:inline">Logout</span>
+  //       </>
+  //     )}
+  //   </button>
+  // );
+
+return (
     <button
       onClick={logoutHandler}
       disabled={isLoggingOut}
-      className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-slate-300 transition-all duration-200 rounded hover:text-red-400 hover:bg-slate-800 disabled:opacity-50"
+      className="flex items-center gap-2 px-3 py-1.5 text-sm font-semibold text-slate-400 transition-all duration-200 rounded-lg outline-none hover:text-red-400 hover:bg-slate-800/80 active:scale-95 focus-visible:ring-2 focus-visible:ring-red-500 disabled:opacity-50 disabled:scale-100"
       title="Terminate Session"
     >
       {isLoggingOut ? (
         <span className="animate-pulse">Exiting...</span>
       ) : (
         <>
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-            />
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
-
           <span className="hidden sm:inline">Logout</span>
         </>
       )}
     </button>
   );
+
 }
 
 export default LogoutBtn;

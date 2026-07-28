@@ -1,2 +1,57 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+/* 1. TAILWIND V4 DARK MODE VARIANT CONFIGURATION */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 2. CUSTOM THEME EXTENSIONS */
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* 3. BASE STYLES WITH GPU TRANSITIONS */
+@layer base {
+  *, ::after, ::before {
+    @apply border-slate-200 dark:border-slate-800;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white transition-colors duration-300 ease-in-out min-h-screen flex flex-col;
+  }
+}
+
+/* 4. PERFORMANCE & INTERACTIVITY UTILITIES */
+@layer utilities {
+  /* GPU-Accelerated Hardware Layering */
+  .gpu-layer {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 rounded-full dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors;
+  }
+
+  /* Scrollbar Hide Utility */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
