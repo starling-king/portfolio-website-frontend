@@ -8,7 +8,6 @@ function AdminProjectList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // 1. Pull the master list directly from Redux
   const projects = useSelector((state) => state.ProjectReducer.adminProjects);
 
   const [loading, setLoading] = useState(true);
@@ -23,9 +22,8 @@ function AdminProjectList() {
     const fetchAdminProjects = async () => {
       setLoading(true);
       try {
-        // Uses the exact signature from your service
         const response = await projectServices.getAllAdminProjects({});
-        // Store globally in Redux
+
         if (response?.data) {
           dispatch(setAdminProjects(response.data));
         }
@@ -39,7 +37,6 @@ function AdminProjectList() {
     fetchAdminProjects();
   }, [dispatch, projects.length]);
 
-  // 2. Delete Logic mapping to Redux
   const handleDelete = async (projectId) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this project permanently?",
@@ -47,10 +44,8 @@ function AdminProjectList() {
     if (!confirmDelete) return;
 
     try {
-      // Uses the { id } signature from your service
       await projectServices.deleteProject({ id: projectId });
 
-      // Filter the deleted project out and update Redux instantly
       const updatedProjects = projects.filter(
         (project) => project._id !== projectId,
       );
@@ -60,15 +55,12 @@ function AdminProjectList() {
     }
   };
 
-  // 3. Toggle Logic mapping to Redux
   const handleToggleStatus = async (projectId, field, currentValue) => {
     try {
       const updatedData = { [field]: !currentValue };
 
-      // Note: See "Critical Fix" below regarding this service call
       await projectServices.updateProject({ id: projectId, ...updatedData });
 
-      // Update Redux state instantly
       const updatedProjects = projects.map((project) =>
         project._id === projectId
           ? { ...project, [field]: !currentValue }

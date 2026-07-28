@@ -13,30 +13,25 @@ export default function AdminHeader() {
     { name: "Builder", url: "/admin/builder" },
     { name: "Resume", url: "/admin/resume" },
     { name: "Profile", url: "/admin/profile" },
-    
   ];
 
-return (
+  return (
     <header className="sticky top-0 z-50 w-full bg-slate-900 border-b border-slate-700 shadow-md">
       <Container>
         <div className="flex items-center justify-between h-14">
-          
-          {/* Admin Logo - shrink-0 prevents it from being crushed */}
           <Link to="/" className="flex items-center gap-2 shrink-0">
-            {/* Short label on mobile, full label on larger screens */}
             <span className="px-2 py-1 text-xs font-bold tracking-wider text-green-400 uppercase bg-green-400/10 rounded border border-green-400/20 sm:hidden">
               Admin
             </span>
             <span className="hidden px-2 py-1 text-xs font-bold tracking-wider text-green-400 uppercase bg-green-400/10 rounded border border-green-400/20 sm:block">
               Admin Mode
             </span>
-            {/* Hidden on mobile to save space */}
+
             <span className="hidden text-lg font-semibold tracking-tight text-slate-200 md:block">
               System Control
             </span>
           </Link>
 
-          {/* Navigation - overflow-x-auto allows swiping on mobile */}
           <nav className="flex-1 ml-4 overflow-x-auto hide-scrollbar">
             <ul className="flex items-center justify-end w-max ml-auto space-x-1 sm:space-x-2">
               {adminNavItems.map((item) => {
@@ -61,7 +56,6 @@ return (
               </li>
             </ul>
           </nav>
-          
         </div>
       </Container>
     </header>

@@ -1,61 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import resumeBuilderSurvice from '../Services/resume.services.js';
-import ResumePreview from '../components/ResumePreview.jsx';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import resumeBuilderSurvice from "../Services/resume.services.js";
+import { ResumePreview } from "../components/index.js";
 
 function ResumeView() {
-    const { username: paramUsername } = useParams();
-    const currentUser = useSelector((state) => state.AuthReducer?.data);
-    
-    // Default to URL username or logged-in username
-    const username = paramUsername || currentUser?.username || currentUser?.user?.username || "ayush";
+  const { username: paramUsername } = useParams();
+  const currentUser = useSelector((state) => state.AuthReducer?.data);
 
-    const [resume, setResume] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
+  const username =
+    paramUsername ||
+    currentUser?.username ||
+    currentUser?.user?.username ||
+    "ayush";
 
-    useEffect(() => {
-        const fetchResume = async () => {
-            if (!username) {
-                setLoading(false);
-                setError('No username provided');
-                return;
-            }
-            try {
-                const response = await resumeBuilderSurvice.ReadResume(username);
-                if (response?.data) {
-                    setResume(response.data);
-                } else {
-                    setError('No resume found for this user.');
-                }
-            } catch (err) {
-                setError('Failed to load resume.');
-            } finally {
-                setLoading(false);
-            }
-        };
+  const [resume, setResume] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-        fetchResume();
-    }, [username]);
+  useEffect(() => {
+    const fetchResume = async () => {
+      if (!username) {
+        setLoading(false);
+        setError("No username provided");
+        return;
+      }
+      try {
+        const response = await resumeBuilderSurvice.ReadResume(username);
+        if (response?.data) {
+          setResume(response.data);
+        } else {
+          setError("No resume found for this user.");
+        }
+      } catch (err) {
+        setError("Failed to load resume.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    if (loading) {
-        return (
-            <div className="flex justify-center items-center py-20 min-h-screen">
-                <div className="w-10 h-10 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
-            </div>
-        );
-    }
+    fetchResume();
+  }, [username]);
 
-    if (error) {
-        return (
-            <div className="text-center py-20 text-slate-600 font-bold">
-                {error}
-            </div>
-        );
-    }
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center py-20 min-h-screen">
+        <div className="w-10 h-10 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
+      </div>
+    );
+  }
 
-    return <ResumePreview resumeData={resume} />;
+  if (error) {
+    return (
+      <div className="text-center py-20 text-slate-600 font-bold">{error}</div>
+    );
+  }
+
+  return <ResumePreview resumeData={resume} />;
 }
 
 export default ResumeView;

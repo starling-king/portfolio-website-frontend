@@ -1,31 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import adminServices from "../Services/admin_users.Services.js";
-import { login } from "../store/AuthSlice.js";
 import { Container, Button } from "../components/index.js";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../store/AuthSlice.js";
 
-function Login() {
+function Signin() {
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-
-  const authStatus = useSelector((state) => state.AuthReducer.status);
-
+  const [success, setSuccess] = useState(false);
   const [isCheckingSession, setIsCheckingSession] = useState(true);
 
   const dispatch = useDispatch();
+  const authStatus = useSelector((state) => state.AuthReducer.status);
+
+  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     if (authStatus) {
       navigate("/admin/dashboard", { replace: true });
-      return;
-    }
-
-    if (isCheckingSession) {
+    } else {
       adminServices
         .getCurrentUser()
         .then((userData) => {
@@ -41,23 +40,25 @@ function Login() {
           setIsCheckingSession(false);
         });
     }
-  }, [authStatus, navigate, dispatch, isCheckingSession]);
+  }, [authStatus, navigate, dispatch]);
 
-  const loginHandler = async (e) => {
+  const registerHandler = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
 
     try {
-      const response = await adminServices.login({ name, password });
+      const response = await adminServices.registerUser({
+        name,
+        password,
+        email,
+      });
 
       if (response && response.data) {
-        const pureUser =
-          response.data?.data?.user || response.data?.data || response.data;
-        dispatch(login(pureUser));
+        setSuccess(true);
       }
     } catch (error) {
-      setError(error.message || "Login failed. Please check your credentials.");
+      setError(error.message || "Registration failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -91,19 +92,60 @@ function Login() {
     );
   }
 
+  if (success) {
+    return (
+      <Container>
+        <div className="flex flex-col items-center justify-center min-h-[70vh] px-4 text-center w-full mx-auto">
+          <div className="w-full max-w-md p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
+            <div className="inline-flex items-center justify-center w-12 h-12 mb-4 text-green-600 bg-green-100 rounded-xl shadow-sm">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-slate-900">
+              Registration Successful
+            </h2>
+            <p className="mt-2 text-slate-600">
+              Your admin credentials are ready.
+            </p>
+
+            <Button
+              onClick={() => navigate("/login", { replace: true })}
+              bgcolor=""
+              textColor=""
+              className="mt-6 w-full flex justify-center py-2.5 px-4 rounded-lg shadow-sm text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 transition-all"
+            >
+              Proceed to Login
+            </Button>
+          </div>
+        </div>
+      </Container>
+    );
+  }
+
   return (
     <Container>
-      <div className="flex items-center justify-center min-h-[75vh] px-4 py-12">
+      <div className="flex items-center justify-center min-h-[75vh] px-4 py-12 w-full mx-auto">
         <div className="w-full max-w-md p-6 space-y-8 bg-white border sm:p-10 border-slate-200 rounded-2xl shadow-sm">
           <div className="text-center">
             <div className="inline-flex items-center justify-center w-12 h-12 mb-4 text-white bg-indigo-600 rounded-xl shadow-sm">
               <span className="font-mono text-xl font-bold">{">_"}</span>
             </div>
             <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-              System Access
+              Initialize Admin
             </h2>
             <p className="mt-2 text-sm text-slate-500">
-              Authenticate to enter the command center.
+              Create the master administrative account.
             </p>
           </div>
 
@@ -113,7 +155,7 @@ function Login() {
             </div>
           )}
 
-          <form onSubmit={loginHandler} className="space-y-5">
+          <form onSubmit={registerHandler} className="space-y-5">
             <div>
               <label className="block mb-1.5 text-sm font-semibold text-slate-700">
                 Username
@@ -124,7 +166,21 @@ function Login() {
                 onChange={(e) => setName(e.target.value)}
                 required
                 className="w-full px-4 py-2.5 text-slate-900 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                placeholder="Enter username"
+                placeholder="Choose a username"
+              />
+            </div>
+
+            <div>
+              <label className="block mb-1.5 text-sm font-semibold text-slate-700">
+                Email Address
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full px-4 py-2.5 text-slate-900 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                placeholder="admin@ayushdev.online"
               />
             </div>
 
@@ -141,7 +197,6 @@ function Login() {
                   className="w-full px-4 py-2.5 pr-12 text-slate-900 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
                   placeholder="••••••••"
                 />
-
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
@@ -189,20 +244,22 @@ function Login() {
             <Button
               type="submit"
               disabled={loading}
+              bgcolor=""
+              textColor=""
               className="w-full flex justify-center py-2.5 px-4 rounded-lg shadow-sm text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
-              {loading ? "Authenticating..." : "Secure Login"}
+              {loading ? "Registering..." : "Sign Up"}
             </Button>
           </form>
 
           <div className="pt-2 text-sm text-center text-slate-500">
-            Need administrative access?{" "}
+            Already initialized?{" "}
             <Link
-              to="/signin"
+              to="/login"
               replace
               className="font-semibold text-indigo-600 hover:text-indigo-500 hover:underline"
             >
-              Register here.
+              Log in here.
             </Link>
           </div>
         </div>
@@ -211,4 +268,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signin;

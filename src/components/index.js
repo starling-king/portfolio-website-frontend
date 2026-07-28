@@ -1,51 +1,36 @@
-// Layout & UI Components
 import Header from "./Header/Header.jsx";
+import AdminHeader from "./Header/AdminHeader.jsx";
+import PublicHeader from "./Header/PublicHeader.jsx";
 import Footer from "./footer/Footer.jsx";
 import LogoutBtn from "./Header/LogoutBtn.jsx";
 import Container from "./container/Container.jsx";
 import ServerWakeupBanner from "./ServerWakeupBanner.jsx";
 import Button from "./Button.jsx";
 import Input from "./Input.jsx";
+import Select from "./Select.jsx";
 
-
-
-// Public Visitor Components
 import ProjectCard from "./ProjectCard.jsx";
+import ProjectGrid from "./ProjectGrid.jsx";
 import HeroSection from "./HeroSection.jsx";
 import SkillsSection from "./SkillsSection.jsx";
-import ImageGallery from "./ImageGallery.jsx";
-import Loader from "./Loader.jsx";
-
-// Protected Admin Components
-import AdminSidebar from "./AdminSidebar.jsx";
-import AdminProjectList from "./AdminProjectList.jsx";
-import ProjectEditorForm from "./ProjectEditorForm.jsx";
-import ImageUpload from "./ImageUpload.jsx";
-import ContentManager from "./ContentManager.jsx";
-import MessageInbox from "./MessageInbox.jsx";
+import CustomSection from "./CustomSection.jsx";
+import ResumePreview from "./ResumePreview.jsx";
 
 export {
-  // Layout & UI
   Header,
+  AdminHeader,
+  PublicHeader,
   Footer,
   LogoutBtn,
   Container,
   ServerWakeupBanner,
   Button,
   Input,
-  
-  // Public
+  Select,
   ProjectCard,
+  ProjectGrid,
   HeroSection,
   SkillsSection,
-  ImageGallery,
-  Loader,
-  
-  // Admin
-  AdminSidebar,
-  AdminProjectList,
-  ProjectEditorForm,
-  ImageUpload,
-  ContentManager,
-  MessageInbox
+  CustomSection,
+  ResumePreview,
 };

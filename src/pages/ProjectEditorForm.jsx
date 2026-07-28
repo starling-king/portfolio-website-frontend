@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import projectServices from "../Services/projects.Services";
-import projectImagesServices from "../Services/project_images.Services"; 
-import { setAdminProjects } from '../store/ProjectSlice.js'; 
+import projectImagesServices from "../Services/project_images.Services";
+import { setAdminProjects } from "../store/ProjectSlice.js";
 
 function ProjectEditorForm() {
   const { id } = useParams();
@@ -27,10 +27,9 @@ function ProjectEditorForm() {
     liveLink: "",
     isFeatured: false,
     isPublished: false,
-    images: [], // Array to hold existing images from the database
+    images: [],
   });
 
-  // Image Upload State
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploadingImages, setUploadingImages] = useState(false);
 
@@ -42,7 +41,6 @@ function ProjectEditorForm() {
 
   useEffect(() => {
     if (isEditMode) {
-      // First check Redux, fallback to API
       const existingProject = adminProjects.find((p) => p._id === id);
 
       if (existingProject) {
@@ -76,7 +74,7 @@ function ProjectEditorForm() {
       liveLink: data.liveLink || "",
       isFeatured: data.isFeatured || false,
       isPublished: data.isPublished || false,
-      images: data.images || data.image || [], // Safely catch your image array
+      images: data.images || data.image || [],
     });
   };
 
@@ -88,91 +86,46 @@ function ProjectEditorForm() {
     }));
   };
 
-  // --- 1. HANDLE TEXT DATA SUBMISSION ---
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   setError("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
-  //   try {
-  //     const techStackArray = formData.techStack
-  //       .split(",")
-  //       .map((tech) => tech.trim())
-  //       .filter((tech) => tech !== "");
+    try {
+      const techStackArray = formData.techStack
+        .split(",")
+        .map((tech) => tech.trim())
+        .filter((tech) => tech !== "");
 
-  //     const payload = { ...formData, techStack: techStackArray };
+      const payload = { ...formData, techStack: techStackArray };
 
-  //     if (isEditMode) {
-  //       // Update existing
-  //       await projectServices.updateProject({ id, ...payload });
-  //       navigate("/admin/projects");
-  //     } else {
-  //       // Create new
-  //       const response = await projectServices.createProject(payload);
-  //       // CRITICAL FIX: After creating, instantly redirect to the edit page so they can upload images
-  //       const newProjectId = response?.data?._id;
-  //       if (newProjectId) {
-  //         navigate(`/admin/projects/edit/${newProjectId}`);
-  //       } else {
-  //         navigate("/admin/projects");
-  //       }
-  //     }
-  //   } catch (err) {
-  //     setError(err.message || "Failed to save project.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+      if (isEditMode) {
+        await projectServices.updateProject({ id, ...payload });
 
-  // --- 1. HANDLE TEXT DATA SUBMISSION ---
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError('');
+        const freshData = await projectServices.getAllAdminProjects({});
+        if (freshData?.data) dispatch(setAdminProjects(freshData.data));
 
-        try {
-            const techStackArray = formData.techStack
-                .split(',')
-                .map(tech => tech.trim())
-                .filter(tech => tech !== '');
+        navigate("/admin/projects");
+      } else {
+        const response = await projectServices.createProject(payload);
 
-            const payload = { ...formData, techStack: techStackArray };
-            
-            // <-- REMOVED THE DISPATCH LINE FROM HERE
+        const freshData = await projectServices.getAllAdminProjects({});
+        if (freshData?.data) dispatch(setAdminProjects(freshData.data));
 
-            if (isEditMode) {
-                // 1. Update existing project in the database
-                await projectServices.updateProject({ id, ...payload });
-                
-                // 2. RE-FETCH: Silently pull the fresh list and update Redux cache
-                const freshData = await projectServices.getAllAdminProjects({});
-                if (freshData?.data) dispatch(setAdminProjects(freshData.data));
-
-                navigate('/admin/projects'); 
-            } else {
-                // 1. Create new project in the database
-                const response = await projectServices.createProject(payload);
-                
-                // 2. RE-FETCH: Silently pull the fresh list and update Redux cache
-                const freshData = await projectServices.getAllAdminProjects({});
-                if (freshData?.data) dispatch(setAdminProjects(freshData.data));
-
-                // 3. Instantly redirect to the edit page so they can upload images
-                const newProjectId = response?.data?._id; 
-                if (newProjectId) {
-                    navigate(`/admin/projects/edit/${newProjectId}`);
-                } else {
-                    navigate('/admin/projects');
-                }
-            }
-        } catch (err) {
-            setError(err.message || "Failed to save project.");
-        } finally {
-            setLoading(false);
+        const newProjectId = response?.data?._id;
+        if (newProjectId) {
+          navigate(`/admin/projects/edit/${newProjectId}`);
+        } else {
+          navigate("/admin/projects");
         }
-    };
+      }
+    } catch (err) {
+      setError(err.message || "Failed to save project.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  // --- 2. HANDLE IMAGE UPLOAD (Only available in Edit Mode) ---
   const handleImageUpload = async () => {
     if (selectedFiles.length === 0) return;
     setUploadingImages(true);
@@ -185,9 +138,8 @@ function ProjectEditorForm() {
       });
 
       alert("Images uploaded successfully!");
-      setSelectedFiles([]); // Clear selection
+      setSelectedFiles([]);
 
-      // Reload the page silently to fetch the new images from the DB
       window.location.reload();
     } catch (err) {
       setError("Failed to upload images.");
@@ -196,7 +148,6 @@ function ProjectEditorForm() {
     }
   };
 
-  // --- 3. HANDLE IMAGE DELETION ---
   const handleDeleteImage = async (imageId) => {
     const confirm = window.confirm(
       "Are you sure you want to delete this image?",
@@ -205,7 +156,7 @@ function ProjectEditorForm() {
 
     try {
       await projectImagesServices.DeleteImages({ projectId: id, imageId });
-      // Remove from UI instantly
+
       setFormData((prev) => ({
         ...prev,
         images: prev.images.filter((img) => img._id !== imageId),
@@ -224,7 +175,6 @@ function ProjectEditorForm() {
 
   return (
     <div className="max-w-4xl px-4 py-8 mx-auto space-y-8">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-slate-900">
           {isEditMode ? "Edit Project" : "Create New Project"}
@@ -243,7 +193,6 @@ function ProjectEditorForm() {
         </div>
       )}
 
-      {/* TEXT DATA FORM */}
       <form
         onSubmit={handleSubmit}
         className="p-8 space-y-6 bg-white border border-slate-200 rounded-xl shadow-sm"
@@ -421,14 +370,12 @@ function ProjectEditorForm() {
         </div>
       </form>
 
-      {/* IMAGE UPLOAD UI (LOCKED BEHIND EDIT MODE) */}
       {isEditMode ? (
         <div className="p-8 bg-white border border-slate-200 rounded-xl shadow-sm">
           <h2 className="mb-4 text-xl font-bold text-slate-900">
             Project Images
           </h2>
 
-          {/* Existing Images Gallery */}
           {formData.images.length > 0 && (
             <div className="grid grid-cols-2 gap-4 mb-8 md:grid-cols-4">
               {formData.images.map((img) => (
@@ -454,7 +401,6 @@ function ProjectEditorForm() {
             </div>
           )}
 
-          {/* New Image Upload Controls */}
           <div className="flex flex-col items-start gap-4 p-6 border-2 border-dashed rounded-lg border-slate-300 bg-slate-50">
             {/* <input 
                             type="file" 
@@ -472,14 +418,11 @@ function ProjectEditorForm() {
                 const incomingFiles = Array.from(e.target.files);
 
                 setSelectedFiles((prevFiles) => {
-                  // 1. Merge the old selections with the new selections
                   const combinedFiles = [...prevFiles, ...incomingFiles];
 
-                  // 2. Check how many images are ALREADY saved in the database
                   const existingDBImages = formData.images.length;
                   const slotsLeft = 5 - existingDBImages;
 
-                  // 3. Prevent the array from exceeding the remaining slots
                   if (combinedFiles.length > slotsLeft) {
                     alert(
                       `Limit enforced: You only have room for ${slotsLeft} more image(s).`,

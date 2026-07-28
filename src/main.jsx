@@ -4,25 +4,23 @@ import App from "./App.jsx";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-// Public Imports
-import Login from "./components/Login";
-import Signin from "./components/Signin";
-import Home from "./pages/Home";
-import Projects from "./pages/Projects";
-import ProjectDetail from "./pages/ProjectDetail";
-import Contact from "./pages/Contact";
-import ResumeView from "./pages/ResumeView";
-
-// Admin Imports
-import AdminAuthLayout from "./components/AdminAuthLayout";
-import AdminProjectList from "./components/AdminProjectList.jsx";
-import ProjectEditorForm from "./components/ProjectEditorForm.jsx";
-import AdminInbox from "./pages/AdminInbox.jsx";
-import Admin from "./pages/Admin.jsx";
-import ProfileSettings from "./pages/ProfileSettings.jsx";
-import ContentManager from "./components/ContentManager.jsx";
-import AdminResumePage from "./pages/AdminResumePage";
+import {
+  Login,
+  Signin,
+  Home,
+  Projects,
+  ProjectDetail,
+  Contact,
+  ResumeView,
+  AdminAuthLayout,
+  AdminProjectList,
+  ProjectEditorForm,
+  AdminInbox,
+  Admin,
+  ProfileSettings,
+  ContentManager,
+  AdminResumePage,
+} from "./pages";
 
 const router = createBrowserRouter([
   {
@@ -30,46 +28,43 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <Home /> },
-      { path: "projects", element: <Projects /> }, 
-      { path: "project/:slug", element: <ProjectDetail /> }, 
-      { path: "contact", element: <Contact /> }, 
+      { path: "projects", element: <Projects /> },
+      { path: "project/:slug", element: <ProjectDetail /> },
+      { path: "contact", element: <Contact /> },
       { path: "resume", element: <ResumeView /> },
 
       { path: "login", element: <Login /> },
       { path: "signin", element: <Signin /> },
 
-      // --- 3. ADMIN ROUTES (THE HIERARCHICAL FIX) ---
-      { 
-        path: "admin", 
-        element: <AdminAuthLayout />, 
+      {
+        path: "admin",
+        element: <AdminAuthLayout />,
         children: [
-            { index: true, element: <Admin /> },
+          { index: true, element: <Admin /> },
 
-            { path: "dashboard", element: <Admin /> },
-            { path: "profile", element: <ProfileSettings /> },
-            { path: "builder", element: <ContentManager /> },
-            { path: "resume", element: <AdminResumePage /> },
-            
-            
-            {
-                path: "projects",
-                children: [
-                    { index: true, element: <AdminProjectList /> }, 
-                    { path: "new", element: <ProjectEditorForm /> }, 
-                    { path: "edit/:id", element: <ProjectEditorForm /> } 
-                ]
-            },
-            
-            { path: "messages", element: <AdminInbox /> }
-        ]
+          { path: "dashboard", element: <Admin /> },
+          { path: "profile", element: <ProfileSettings /> },
+          { path: "builder", element: <ContentManager /> },
+          { path: "resume", element: <AdminResumePage /> },
+
+          {
+            path: "projects",
+            children: [
+              { index: true, element: <AdminProjectList /> },
+              { path: "new", element: <ProjectEditorForm /> },
+              { path: "edit/:id", element: <ProjectEditorForm /> },
+            ],
+          },
+
+          { path: "messages", element: <AdminInbox /> },
+        ],
       },
 
-      // --- 4. MULTI-TENANT CATCH-ALL ---
       { path: ":username", element: <Home /> },
-      { path: ":username/projects", element: <Projects /> }, 
-      { path: ":username/project/:slug", element: <ProjectDetail /> }, 
+      { path: ":username/projects", element: <Projects /> },
+      { path: ":username/project/:slug", element: <ProjectDetail /> },
       { path: ":username/contact", element: <Contact /> },
-      { path: ":username/resume", element: <ResumeView /> }
+      { path: ":username/resume", element: <ResumeView /> },
     ],
   },
 ]);
