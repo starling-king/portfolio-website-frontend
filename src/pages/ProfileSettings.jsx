@@ -9,13 +9,23 @@ function ProfileSettings() {
     
     // Pull current auth data from Redux
     const authData = useSelector((state) => state.AuthReducer.data);
-    const currentUser = authData?.user;
+    const currentUser = authData?.user || authData;
 
     // --- STATE: Admin Account Details ---
     const [adminForm, setAdminForm] = useState({
         username: currentUser?.username || '',
         email: currentUser?.email || ''
     });
+
+    useEffect(() => {
+        if (currentUser?.username) {
+            setAdminForm({
+                username: currentUser.username || '',
+                email: currentUser.email || ''
+            });
+        }
+    }, [currentUser]);
+
     const [adminStatus, setAdminStatus] = useState({ loading: false, error: '', success: '' });
 
     // --- STATE: Public Portfolio (Site Content) ---
