@@ -20,8 +20,9 @@ function ContentManager() {
     useEffect(() => {
         const loadContent = async () => {
             try {
-                if (currentUser?.username) {
-                    const res = await siteContentServices.read({ user: currentUser.username });
+                const targetUsername = currentUser?.username || currentUser?.user?.username;
+                if (targetUsername) {
+                    const res = await siteContentServices.read({ user: targetUsername});
                     
                     if (res?.data && Array.isArray(res.data)) {
                         let savedLayout = ['hero', 'skills', 'projects']; 

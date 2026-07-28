@@ -11,6 +11,7 @@ export default function AdminHeader() {
     { name: "Projects", url: "/admin/projects" },
     { name: "Inbox", url: "/admin/messages" },
     { name: "Builder", url: "/admin/builder" },
+    { name: "Resume", url: "/admin/resume" },
     { name: "Profile", url: "/admin/profile" },
     
   ];

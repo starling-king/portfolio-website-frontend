@@ -10,7 +10,7 @@ export default function PublicHeader() {
   const pathSegments = location.pathname.split('/').filter(Boolean);
 
   //defining the system route if it is their or not written by me not ai 
-  const systemRoutes = ["login", "signin", "dashboard", "projects", "contact"];
+  const systemRoutes = ["login", "signin", "dashboard", "projects", "contact","resume"];
   let tenantPrefix = "";
 
   //If the first word in the URL is NOT a system route, it must be a user's name! written by me not ai
@@ -24,6 +24,7 @@ export default function PublicHeader() {
   const navItems = [
     { name: "Home", url: activeTenant || "/" },
     { name: "Projects", url: `${activeTenant}/projects` },
+    { name: "Resume", url: `${activeTenant}/resume`},
     { name: "Contact", url: `${activeTenant}/contact` },
   ];
 
