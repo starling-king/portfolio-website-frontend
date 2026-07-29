@@ -44,15 +44,19 @@ function ResumeView() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center py-20 min-h-screen">
-        <div className="w-10 h-10 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
+      <div className="flex justify-center items-center py-20 min-h-screen bg-slate-50 dark:bg-[#040405] transition-colors duration-300">
+        <div className="w-10 h-10 border-4 border-emerald-500 dark:border-emerald-400 rounded-full border-t-transparent animate-spin"></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="text-center py-20 text-slate-600 font-bold">{error}</div>
+      <div className="flex justify-center items-center py-20 min-h-screen bg-slate-50 dark:bg-[#040405] transition-colors duration-300">
+        <div className="text-center text-slate-600 dark:text-slate-400 font-bold tracking-wide">
+          {error}
+        </div>
+      </div>
     );
   }
 
