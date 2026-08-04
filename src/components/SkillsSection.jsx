@@ -31,7 +31,7 @@ function SkillsSection({ skillsArray }) {
       {/* 1. Cognitive Anchoring: HUD Marker Header */}
       <div className="flex flex-col items-center mb-10 sm:mb-14">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-4 rounded-full bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm gpu-layer cursor-default">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          <span className="w-1.5 h-1.5 rounded-full bg-primary-500" />
           <span className="text-[10px] font-bold tracking-widest text-slate-600 dark:text-slate-400 uppercase">
             Expertise
           </span>
@@ -47,7 +47,7 @@ function SkillsSection({ skillsArray }) {
           <div
             key={index}
             // PSYCH-UI: Glassmorphic squircle (rounded-2xl) with Z-axis lift and Emerald illumination on hover.
-            className="px-4 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base font-bold tracking-wide rounded-2xl text-slate-700 dark:text-slate-300 bg-white/60 dark:bg-[#040405]/60 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-[0_4px_15px_rgb(0,0,0,0.03)] dark:shadow-none hover:-translate-y-1.5 hover:shadow-[0_10px_20px_-10px_rgba(16,185,129,0.15)] hover:border-emerald-200 dark:hover:border-emerald-500/30 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-500/10 transition-all duration-300 ease-out cursor-default gpu-layer"
+            className="px-4 py-2.5 sm:px-6 sm:py-3 text-sm sm:text-base font-bold tracking-wide rounded-2xl text-slate-700 dark:text-slate-300 bg-white/60 dark:bg-[#040405]/60 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800/80 shadow-[0_4px_15px_rgb(0,0,0,0.03)] dark:shadow-none hover:-translate-y-1.5 hover:shadow-[0_10px_20px_-10px_rgba(16,185,129,0.15)] hover:border-primary-200 dark:hover:border-primary-500/30 hover:text-primary-700 dark:hover:text-primary-400 hover:bg-primary-50/50 dark:hover:bg-primary-500/10 transition-all duration-300 ease-out cursor-default gpu-layer"
           >
             {skill}
           </div>

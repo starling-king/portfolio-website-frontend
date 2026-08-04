@@ -45,7 +45,7 @@ function ResumeView() {
   if (loading) {
     return (
       <div className="flex justify-center items-center py-20 min-h-screen bg-slate-50 dark:bg-[#040405] transition-colors duration-300">
-        <div className="w-10 h-10 border-4 border-emerald-500 dark:border-emerald-400 rounded-full border-t-transparent animate-spin"></div>
+        <div className="w-10 h-10 border-4 border-primary-500 dark:border-primary-400 rounded-full border-t-transparent animate-spin"></div>
       </div>
     );
   }

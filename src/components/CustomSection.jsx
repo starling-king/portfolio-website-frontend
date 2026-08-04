@@ -146,7 +146,7 @@ function CustomSection({ htmlContent }) {
       {data.title && (
         <div className="flex flex-col items-center mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-4 rounded-full bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm gpu-layer cursor-default">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+            <span className="w-1.5 h-1.5 rounded-full bg-primary-500" />
             <span className="text-[10px] font-bold tracking-widest text-slate-600 dark:text-slate-400 uppercase">
               Insight
             </span>
@@ -161,7 +161,7 @@ function CustomSection({ htmlContent }) {
       {data.htmlText && (
         // PSYCH-UI Fix: Forced prose to inherit Dark Mode safely (prose-invert). 
         // Overrode default Indigo links/markers with Tactical Emerald.
-        <div className="max-w-4xl mx-auto mb-16 prose prose-slate dark:prose-invert lg:prose-lg text-slate-600 dark:text-slate-400 prose-headings:text-slate-900 dark:prose-headings:text-slate-50 prose-a:text-emerald-600 dark:prose-a:text-emerald-400 hover:prose-a:text-emerald-500 transition-colors duration-300 gpu-layer">
+        <div className="max-w-4xl mx-auto mb-16 prose prose-slate dark:prose-invert lg:prose-lg text-slate-600 dark:text-slate-400 prose-headings:text-slate-900 dark:prose-headings:text-slate-50 prose-a:text-primary-600 dark:prose-a:text-primary-400 hover:prose-a:text-primary-500 transition-colors duration-300 gpu-layer">
           {parse(data.htmlText)}
         </div>
       )}
@@ -178,9 +178,9 @@ function CustomSection({ htmlContent }) {
               `}
             >
               {/* Ambient Internal Hover Glow */}
-              <div className="absolute inset-0 bg-linear-to-b from-transparent to-emerald-50/50 dark:to-emerald-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <div className="absolute inset-0 bg-linear-to-b from-transparent to-primary-50/50 dark:to-primary-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-              <h3 className="relative z-10 mb-4 text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300">
+              <h3 className="relative z-10 mb-4 text-xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
                 {card.title}
               </h3>
               

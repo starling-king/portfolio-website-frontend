@@ -42,7 +42,7 @@ function Select({ options, label, className = "", required, error, ...props }, r
           className={`w-full px-4 py-2.5 text-sm bg-slate-50/50 dark:bg-[#040405] text-slate-900 dark:text-slate-100 border rounded-xl outline-none transition-all duration-300 shadow-sm focus:shadow-md focus:bg-white dark:focus:bg-slate-900/40 appearance-none cursor-pointer ${
             error 
               ? 'border-red-300 dark:border-red-500/50 focus:border-red-500 focus:ring-2 focus:ring-red-500/20' 
-              : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20'
+              : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20'
           } ${className}`}
           {...props}
         >

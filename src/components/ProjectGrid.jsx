@@ -39,7 +39,7 @@ function ProjectGrid({ projects, targetUser }) {
       {/* Section Header: Cognitive Anchoring */}
       <div className="flex flex-col items-center mb-12 sm:mb-16">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-4 rounded-full bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm gpu-layer cursor-default">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          <span className="w-1.5 h-1.5 rounded-full bg-primary-500" />
           <span className="text-[10px] font-bold tracking-widest text-slate-600 dark:text-slate-400 uppercase">
             Portfolio
           </span>

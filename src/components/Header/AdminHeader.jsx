@@ -72,7 +72,7 @@ export default function AdminHeader() {
           
 //           {/* Admin Logo Area */}
 //           <Link to="/" className="flex items-center gap-3 shrink-0 outline-none group">
-//             <div className="flex items-center justify-center px-2.5 py-1 text-xs font-bold tracking-widest text-emerald-400 uppercase bg-emerald-500/10 rounded-lg border border-emerald-500/20 group-hover:bg-emerald-500/20 transition-colors">
+//             <div className="flex items-center justify-center px-2.5 py-1 text-xs font-bold tracking-widest text-primary-400 uppercase bg-primary-500/10 rounded-lg border border-primary-500/20 group-hover:bg-primary-500/20 transition-colors">
 //               <span className="sm:hidden">Admin</span>
 //               <span className="hidden sm:inline">Admin Mode</span>
 //             </div>
@@ -120,11 +120,11 @@ return (
           
           {/* Admin Logo Area */}
           <Link to="/" className="flex items-center gap-3 shrink-0 outline-none group gpu-layer">
-            <div className="flex items-center justify-center px-2.5 py-1.5 text-[10px] sm:text-xs font-bold tracking-widest text-emerald-600 dark:text-emerald-400 uppercase bg-emerald-50 dark:bg-emerald-500/10 rounded-lg border border-emerald-200 dark:border-emerald-500/20 group-hover:bg-emerald-100 dark:group-hover:bg-emerald-500/20 transition-colors duration-300">
+            <div className="flex items-center justify-center px-2.5 py-1.5 text-[10px] sm:text-xs font-bold tracking-widest text-primary-600 dark:text-primary-400 uppercase bg-primary-50 dark:bg-primary-500/10 rounded-lg border border-primary-200 dark:border-primary-500/20 group-hover:bg-primary-100 dark:group-hover:bg-primary-500/20 transition-colors duration-300">
               <span className="sm:hidden">Admin</span>
               <span className="hidden sm:inline">Admin Mode</span>
             </div>
-            <span className="hidden text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100 lg:block group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300">
+            <span className="hidden text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100 lg:block group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
               System Control
             </span>
           </Link>
@@ -211,7 +211,7 @@ return (
                 }}
                 className={`w-full text-left px-4 py-3.5 text-sm font-medium rounded-xl transition-all duration-300 outline-none ${
                   isActive 
-                    ? "text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 shadow-sm" 
+                    ? "text-primary-700 dark:text-primary-400 bg-primary-50 dark:bg-primary-500/10 shadow-sm" 
                     : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:pl-6"
                 }`}
               >
