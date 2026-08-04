@@ -18,7 +18,7 @@ function HeroSection({ name, role, aboutText, profilePhoto, username }) {
 //       {/* 2. Magnetic Avatar */}
 //       <div className="relative z-10 group mb-6 sm:mb-8 gpu-layer">
 //         {/* High-Tech Ring */}
-//         <div className="absolute -inset-1 rounded-full bg-linear-to-tr from-primary-400 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out" />
+//         <div className="absolute -inset-1 rounded-full bg-linear-to-tr from-primary-400 to-primary-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out" />
         
 //         {/* Avatar Image - PSYCH-UI Fix: Added dark:border-slate-800 and a resting primary shadow to bridge the photo's light background */}
 //         <div className="relative w-32 h-32 sm:w-40 sm:h-40 overflow-hidden border-4 border-white dark:border-slate-800/80 rounded-full shadow-xl dark:shadow-[0_0_30px_rgba(16,185,129,0.15)] bg-slate-100 dark:bg-slate-900 transition-transform duration-500 ease-out group-hover:scale-[1.02]">
@@ -40,7 +40,7 @@ function HeroSection({ name, role, aboutText, profilePhoto, username }) {
 //       <div className="relative z-10 max-w-3xl mx-auto space-y-3 sm:space-y-4">
 //         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-slate-900 dark:text-slate-50">
 //           Hi, I'm{" "}
-//           <span className="text-transparent bg-clip-text bg-linear-to-r from-primary-500 to-teal-600 dark:from-primary-400 dark:to-teal-300">
+//           <span className="text-transparent bg-clip-text bg-linear-to-r from-primary-500 to-primary-600 dark:from-primary-400 dark:to-primary-300">
 //             {name || username || "Ayush Mishra"}
 //           </span>
 //         </h1>
@@ -95,7 +95,7 @@ function HeroSection({ name, role, aboutText, profilePhoto, username }) {
 
 //           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tighter text-slate-900 dark:text-slate-50 leading-[1.1]">
 //             Hi, I'm <br className="hidden sm:block lg:hidden" />
-//             <span className="text-transparent bg-clip-text bg-linear-to-r from-primary-500 to-teal-600 dark:from-primary-400 dark:to-teal-300">
+//             <span className="text-transparent bg-clip-text bg-linear-to-r from-primary-500 to-primary-600 dark:from-primary-400 dark:to-primary-300">
 //               {name || username || "Ayush Mishra"}
 //             </span>
 //           </h1>
@@ -128,7 +128,7 @@ function HeroSection({ name, role, aboutText, profilePhoto, username }) {
 //         <div className="lg:col-span-5 relative w-full max-w-70 sm:max-w-80 mx-auto lg:ml-auto lg:mr-0 order-2 gpu-layer group mt-8 lg:mt-0">
           
 //           {/* Depth Illusion: Floating Glow */}
-//           <div className="absolute -inset-6 bg-linear-to-tr from-primary-500/20 to-teal-500/20 dark:from-primary-500/10 dark:to-teal-500/10 blur-3xl rounded-[3rem] -z-10 transition-all duration-700 group-hover:scale-110 opacity-70" />
+//           <div className="absolute -inset-6 bg-linear-to-tr from-primary-500/20 to-primary-500/20 dark:from-primary-500/10 dark:to-primary-500/10 blur-3xl rounded-[3rem] -z-10 transition-all duration-700 group-hover:scale-110 opacity-70" />
           
 //           {/* The Physical Badge Card */}
 //           <div className="relative p-2 rounded-4xl bg-white/60 dark:bg-[#040405]/60 backdrop-blur-2xl border border-white/80 dark:border-slate-800/80 shadow-2xl transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:rotate-1">
@@ -195,7 +195,7 @@ function HeroSection({ name, role, aboutText, profilePhoto, username }) {
 
 //           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tighter text-slate-900 dark:text-slate-50 leading-[1.1]">
 //             Hi, I'm <br className="hidden sm:block lg:hidden" />
-//             <span className="text-transparent bg-clip-text bg-linear-to-r from-primary-500 to-teal-600 dark:from-primary-400 dark:to-teal-300">
+//             <span className="text-transparent bg-clip-text bg-linear-to-r from-primary-500 to-primary-600 dark:from-primary-400 dark:to-primary-300">
 //               {name || username || "Ayush Mishra"}
 //             </span>
 //           </h1>
@@ -228,7 +228,7 @@ function HeroSection({ name, role, aboutText, profilePhoto, username }) {
 //         <div className="lg:col-span-5 relative w-full max-w-70 sm:max-w-80 mx-auto lg:ml-auto lg:mr-0 order-2 gpu-layer group mt-8 lg:mt-0">
           
 //           {/* Depth Illusion: Floating Glow */}
-//           <div className="absolute -inset-6 bg-linear-to-tr from-primary-500/20 to-teal-500/20 dark:from-primary-500/10 dark:to-teal-500/10 blur-3xl rounded-[3rem] -z-10 transition-all duration-700 group-hover:scale-110 opacity-70" />
+//           <div className="absolute -inset-6 bg-linear-to-tr from-primary-500/20 to-primary-500/20 dark:from-primary-500/10 dark:to-primary-500/10 blur-3xl rounded-[3rem] -z-10 transition-all duration-700 group-hover:scale-110 opacity-70" />
           
 //           {/* The Physical Badge Card - PSYCH-UI Fix: Hardened Light Mode Border (border-slate-200) for Figure-Ground Segregation */}
 //           <div className="relative p-2 rounded-4xl bg-white/80 dark:bg-[#040405]/60 backdrop-blur-2xl border border-slate-200 dark:border-slate-800/80 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] dark:shadow-2xl transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:rotate-1">
@@ -295,7 +295,7 @@ return (
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tighter text-slate-900 dark:text-slate-50 leading-[1.1]">
             Hi, I'm <br className="hidden sm:block lg:hidden" />
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-primary-500 to-teal-600 dark:from-primary-400 dark:to-teal-300">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-primary-500 to-primary-600 dark:from-primary-400 dark:to-primary-300">
               {name || username || "Ayush Mishra"}
             </span>
           </h1>
@@ -328,7 +328,7 @@ return (
         <div className="lg:col-span-5 relative w-full max-w-70 sm:max-w-80 mx-auto lg:ml-auto lg:mr-0 order-2 gpu-layer group mt-4 lg:mt-0">
           
           {/* PSYCH-UI Fix: Aggressively boosted Dark Mode ambient glow (from /10 to /30) to restore physical depth */}
-          <div className="absolute -inset-6 bg-linear-to-tr from-primary-500/30 to-teal-500/30 dark:from-primary-500/30 dark:to-teal-500/30 blur-3xl rounded-[3rem] -z-10 transition-all duration-700 group-hover:scale-110 opacity-70" />
+          <div className="absolute -inset-6 bg-linear-to-tr from-primary-500/30 to-primary-500/30 dark:from-primary-500/30 dark:to-primary-500/30 blur-3xl rounded-[3rem] -z-10 transition-all duration-700 group-hover:scale-110 opacity-70" />
           
           <div className="relative p-2 rounded-4xl bg-white/80 dark:bg-[#040405]/60 backdrop-blur-2xl border border-slate-200 dark:border-slate-800/80 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] dark:shadow-2xl transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:rotate-1">
             
