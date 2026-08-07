@@ -241,7 +241,7 @@ function ProjectDetail() {
     loadProjectData();
   }, [slug, targetUser, allProjects, dispatch]);
 
-  // AUTOPLAY SLIDESHOW ENGINE (Added per your request)
+  // AUTOPLAY SLIDESHOW ENGINE
   useEffect(() => {
     if (!project?.image || project.image.length <= 1) return;
     
@@ -249,7 +249,7 @@ function ProjectDetail() {
       setCurrentImageIndex((prev) =>
         prev === project.image.length - 1 ? 0 : prev + 1
       );
-    }, 5000); // 5 seconds per slide
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [project?.image]);
@@ -271,7 +271,7 @@ function ProjectDetail() {
   };
 
   // ----------------------------------------------------------------------
-  // PSYCH-UI RENDER (Cinematic Presentation)
+  // PSYCH-UI RENDER (Overlapping Cinematic Dossier)
   // ----------------------------------------------------------------------
 
   if (loading)
@@ -302,166 +302,178 @@ function ProjectDetail() {
     );
 
   return (
-    <section className="relative min-h-screen px-4 py-16 sm:py-24 transition-colors duration-300 overflow-hidden">
+    <section className="relative min-h-screen px-4 pt-6 pb-24 mx-auto max-w-7xl transition-colors duration-300">
       
-      {/* Ambient Grid Background */}
-      <div className="absolute inset-0 z-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMTQ4LCAxNjMsIDE4NCwgMC4xNSkiLz48L3N2Zz4=')] dark:bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wNSkiLz48L3N2Zz4=')] mask-[radial-gradient(ellipse_80%_80%_at_50%_0%,#000_30%,transparent_100%)] pointer-events-none" />
+      {/* 1. Global Navigation */}
+      <Link
+        to={`/${targetUser}/projects`}
+        className="inline-flex items-center gap-2 mb-6 ml-2 text-[11px] font-black tracking-widest text-slate-500 dark:text-slate-400 uppercase hover:text-primary-600 dark:hover:text-primary-400 transition-colors group gpu-layer"
+      >
+        <svg className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Return to Grid
+      </Link>
 
-      <div className="relative z-10 mx-auto max-w-6xl animate-[slideDown_0.5s_ease-out]">
+      {/* 2. The Cinematic Viewport (Hero Slider) */}
+      <div className="relative w-full rounded-4xl sm:rounded-[2.5rem] overflow-hidden shadow-lg bg-slate-900 border border-slate-200/50 dark:border-slate-800/80 aspect-16/10 md:aspect-2.5/1 group isolate gpu-layer">
         
-        {/* Navigation & Header */}
-        <div className="mb-10">
-          <Link
-            to={`/${targetUser}/projects`}
-            className="inline-flex items-center gap-2 mb-8 text-[11px] font-black tracking-widest text-slate-500 dark:text-slate-400 uppercase hover:text-primary-600 dark:hover:text-primary-400 transition-colors group gpu-layer"
-          >
-            <svg className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            Return to Grid
-          </Link>
-
-          <div className="flex flex-col items-start gap-4">
-            <span className="inline-flex items-center px-3 py-1 text-[10px] font-black tracking-widest uppercase bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 border border-primary-200 dark:border-primary-800 rounded-lg shadow-sm gpu-layer">
-              {project.category || "Uncategorized"}
-            </span>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 leading-[1.1]">
-              {project.title}
-            </h1>
-          </div>
-        </div>
-
-        {/* Cinematic Crossfade Slider */}
-        {project.image && project.image.length > 0 && (
-          <div className="relative w-full overflow-hidden bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] dark:shadow-2xl rounded-4xl aspect-video sm:aspect-21/9 group gpu-layer isolate">
-            
-            {/* Ambient Background Glow matching the dynamic theme */}
-            <div className="absolute -inset-10 bg-linear-to-tr from-primary-500/10 to-transparent blur-3xl -z-10" />
-
-            {/* Images: Render all, fade opacity for smooth transition */}
+        {project.image && project.image.length > 0 ? (
+          <>
+            {/* Images with GPU Crossfade */}
             {project.image.map((img, idx) => (
               <img
                 key={idx}
                 src={img.imageUrl}
                 alt={img.altText || `Slide ${idx}`}
                 className={`absolute inset-0 object-cover w-full h-full transition-opacity duration-1000 ease-in-out ${
-                  idx === currentImageIndex ? "opacity-100 z-10 scale-100" : "opacity-0 z-0 scale-105"
+                  idx === currentImageIndex ? "opacity-100 z-10" : "opacity-0 z-0"
                 }`}
               />
             ))}
 
-            {/* Manual Controls (Fade in on hover) */}
+            {/* Depth Gradient to make the overlapping card pop */}
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/60 to-transparent z-10 pointer-events-none" />
+
+            {/* Tactical Controls */}
             {project.image.length > 1 && (
-              <>
-                {/* Gradient overlays to make controls visible against light/dark images */}
-                <div className="absolute inset-y-0 left-0 w-32 bg-linear-to-r from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 pointer-events-none" />
-                <div className="absolute inset-y-0 right-0 w-32 bg-linear-to-l from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 pointer-events-none" />
-                
+              <div className="absolute inset-0 z-20 flex items-center justify-between px-4 sm:px-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
                 <button
                   onClick={prevImage}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center w-12 h-12 text-white bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 rounded-full opacity-0 group-hover:opacity-100 transform-gpu hover:scale-110 transition-all duration-300 z-30 focus:outline-none"
+                  className="flex items-center justify-center w-12 h-12 text-white bg-black/20 hover:bg-black/40 backdrop-blur-xl border border-white/20 rounded-full transform-gpu hover:scale-110 transition-all duration-300 pointer-events-auto focus:outline-none shadow-lg"
                 >
-                  <svg className="w-6 h-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" /></svg>
+                  <svg className="w-5 h-5 mr-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" /></svg>
                 </button>
                 <button
                   onClick={nextImage}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center w-12 h-12 text-white bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 rounded-full opacity-0 group-hover:opacity-100 transform-gpu hover:scale-110 transition-all duration-300 z-30 focus:outline-none"
+                  className="flex items-center justify-center w-12 h-12 text-white bg-black/20 hover:bg-black/40 backdrop-blur-xl border border-white/20 rounded-full transform-gpu hover:scale-110 transition-all duration-300 pointer-events-auto focus:outline-none shadow-lg"
                 >
-                  <svg className="w-6 h-6 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" /></svg>
+                  <svg className="w-5 h-5 ml-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" /></svg>
                 </button>
-
-                {/* Progress Indicators */}
-                <div className="absolute flex gap-2.5 bottom-6 left-1/2 -translate-x-1/2 z-30">
-                  {project.image.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setCurrentImageIndex(idx)}
-                      className={`h-2 rounded-full transition-all duration-500 ${
-                        idx === currentImageIndex 
-                          ? "w-8 bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]" 
-                          : "w-2 bg-white/40 hover:bg-white/70"
-                      }`}
-                    />
-                  ))}
-                </div>
-              </>
+              </div>
             )}
-          </div>
-        )}
-
-        {/* Narrative & Analytics Grid */}
-        <div className="grid grid-cols-1 gap-12 mt-16 lg:grid-cols-12">
-          
-          {/* Left Narrative Column */}
-          <div className="lg:col-span-8">
-            <div className="prose prose-slate dark:prose-invert lg:prose-lg max-w-none prose-headings:font-extrabold prose-p:text-slate-600 dark:prose-p:text-slate-400 prose-p:leading-relaxed">
-              <h2>Overview</h2>
-              <p>{project.description}</p>
-
-              {project.problem && (
-                <>
-                  <h2 className="mt-12">The Challenge</h2>
-                  <p>{project.problem}</p>
-                </>
-              )}
-            </div>
-          </div>
-
-          {/* Right Action Column (Sticky Dashboard) */}
-          <div className="lg:col-span-4">
-            <div className="sticky top-24 flex flex-col p-8 bg-white/60 dark:bg-[#040405]/60 backdrop-blur-2xl border border-slate-200/80 dark:border-slate-800 rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.05)] dark:shadow-none gpu-layer">
-              
-              <h3 className="text-[11px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase mb-5">
-                Technology Matrix
-              </h3>
-              
-              <div className="flex flex-wrap gap-2.5 mb-10">
-                {project.techStack?.map((tech, i) => (
-                  <span
-                    key={i}
-                    className="px-3.5 py-1.5 text-[11px] font-bold tracking-wider uppercase text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary-500/50 hover:bg-primary-50 dark:hover:bg-primary-500/10 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300 cursor-default"
-                  >
-                    {tech}
-                  </span>
+            
+            {/* Progress Dots */}
+            {project.image && project.image.length > 1 && (
+              <div className="absolute flex gap-2 bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 z-20">
+                {project.image.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`h-1.5 rounded-full transition-all duration-500 ${
+                      idx === currentImageIndex 
+                        ? "w-8 bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]" 
+                        : "w-2 bg-white/40"
+                    }`}
+                  />
                 ))}
               </div>
+            )}
+          </>
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-slate-100 dark:bg-slate-900 text-slate-400 dark:text-slate-600 font-bold tracking-widest uppercase text-sm">
+            No Image Data
+          </div>
+        )}
+      </div>
 
-              <h3 className="text-[11px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase mb-5">
-                Project Uplinks
-              </h3>
+      {/* 3. The Overlapping Z-Axis Dossier */}
+      <div className="relative z-30 mx-auto max-w-6xl px-4 sm:px-8 -mt-16 sm:-mt-24 md:-mt-32">
+        <div className="p-8 sm:p-12 md:p-16 bg-white/95 dark:bg-[#060608]/95 backdrop-blur-3xl border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] gpu-layer">
+          
+          {/* Dossier Header */}
+          <div className="flex flex-col items-start gap-4 mb-10">
+            <span className="inline-flex items-center px-3 py-1.5 text-[10px] font-black tracking-widest uppercase bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 border border-primary-200 dark:border-primary-800 rounded-lg shadow-sm">
+              {project.category || "Uncategorized"}
+            </span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50 leading-[1.1]">
+              {project.title}
+            </h1>
+          </div>
 
-              <div className="flex flex-col gap-3">
-                {project.liveLink && (
-                  <a
-                    href={project.liveLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="w-full flex items-center justify-between py-3.5 px-5 rounded-xl shadow-md hover:shadow-[0_0_20px_var(--theme-primary-glow)] hover:-translate-y-0.5 text-[12px] font-black tracking-widest uppercase text-white bg-primary-500 hover:bg-primary-600 transition-all duration-300 gpu-layer group"
-                  >
-                    <span>View Live Build</span>
-                    <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  </a>
-                )}
-                
-                {project.githubLink && (
-                  <a
-                    href={project.githubLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="w-full flex items-center justify-between py-3.5 px-5 rounded-xl text-[12px] font-black tracking-widest uppercase text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 hover:-translate-y-0.5 transition-all duration-300 gpu-layer group"
-                  >
-                    <span>Source Code</span>
-                    <svg className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12" fill="currentColor" viewBox="0 0 24 24">
-                      <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-                    </svg>
-                  </a>
+          {/* Hard Divider */}
+          <hr className="my-10 border-slate-200 dark:border-slate-800/80" />
+
+          {/* Dossier Body: Split Grid */}
+          <div className="grid grid-cols-1 gap-12 lg:gap-16 lg:grid-cols-12">
+            
+            {/* Left: Narrative Context */}
+            <div className="lg:col-span-7 xl:col-span-8">
+              <div className="prose prose-slate dark:prose-invert lg:prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-p:text-slate-600 dark:prose-p:text-slate-400 prose-p:leading-relaxed">
+                <h2>Project Overview</h2>
+                <p>{project.description}</p>
+
+                {project.problem && (
+                  <>
+                    <h2 className="mt-12">The Challenge</h2>
+                    <p>{project.problem}</p>
+                  </>
                 )}
               </div>
             </div>
+
+            {/* Right: Tactical Control Panel */}
+            <div className="lg:col-span-5 xl:col-span-4">
+              <div className="flex flex-col gap-10">
+                
+                {/* Tech Matrix */}
+                {project.techStack && project.techStack.length > 0 && (
+                  <div>
+                    <h3 className="text-[11px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase mb-4">
+                      Technology Matrix
+                    </h3>
+                    <div className="flex flex-wrap gap-2.5">
+                      {project.techStack.map((tech, i) => (
+                        <span
+                          key={i}
+                          className="px-3.5 py-1.5 text-[11px] font-bold tracking-wider uppercase text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-primary-500/50 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300 cursor-default"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Uplinks / Buttons */}
+                <div>
+                  <h3 className="text-[11px] font-black tracking-widest text-slate-400 dark:text-slate-500 uppercase mb-4">
+                    Project Uplinks
+                  </h3>
+                  <div className="flex flex-col gap-3">
+                    {project.liveLink && (
+                      <a
+                        href={project.liveLink}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="w-full flex items-center justify-between py-4 px-6 rounded-2xl shadow-lg hover:shadow-[0_0_20px_var(--theme-primary-glow)] hover:-translate-y-0.5 text-[12px] font-black tracking-widest uppercase text-white bg-primary-500 hover:bg-primary-600 transition-all duration-300 gpu-layer group"
+                      >
+                        <span>View Live Build</span>
+                        <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    )}
+                    
+                    {project.githubLink && (
+                      <a
+                        href={project.githubLink}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="w-full flex items-center justify-between py-4 px-6 rounded-2xl text-[12px] font-black tracking-widest uppercase text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 hover:-translate-y-0.5 transition-all duration-300 gpu-layer group"
+                      >
+                        <span>Source Code</span>
+                        <svg className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12" fill="currentColor" viewBox="0 0 24 24">
+                          <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                        </svg>
+                      </a>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
           </div>
-          
         </div>
       </div>
     </section>
