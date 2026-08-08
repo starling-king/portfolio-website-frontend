@@ -906,9 +906,10 @@ function ContentManager() {
                     </div> */}
 
                     {/* TinyMCE Editor - Wrapped to protect dark mode contrast */}
+                   {/* TinyMCE Editor - Smart Theme Adapting */}
                     <div className="mb-10 w-full overflow-hidden">
                       <label className="block text-[10px] font-black tracking-widest text-slate-500 dark:text-slate-400 uppercase mb-2">Rich Text Data Payload</label>
-                      <div className="p-1 bg-slate-200 dark:bg-[#0a0a0c] border border-transparent dark:border-slate-800 rounded-xl overflow-x-auto shadow-inner w-full">
+                      <div className="p-1 bg-white dark:bg-[#0a0a0c] border border-slate-200 dark:border-slate-800 rounded-xl overflow-x-auto shadow-sm w-full">
                         <Editor
                           apiKey={conf.tinymceApiKey}
                           value={customBlocks[sectionKey]?.htmlText || ""}
@@ -916,12 +917,16 @@ function ContentManager() {
                           init={{
                             height: 350,
                             menubar: false,
-                            // PSYCH-UI Fix: Activate TinyMCE Native Dark Mode
-                            skin: (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'oxide-dark' : 'oxide',
-                            content_css: (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'default',
+                            skin: document.documentElement.classList.contains('dark') ? 'oxide-dark' : 'oxide',
+                            content_css: document.documentElement.classList.contains('dark') ? 'dark' : 'default',
                             plugins: ["image", "advlist", "autolink", "lists", "link", "charmap", "preview", "searchreplace", "visualblocks", "code", "fullscreen", "media", "table", "wordcount"],
                             toolbar: "undo redo | formatselect | bold italic forecolor | alignleft aligncenter alignright | bullist numlist outdent indent | code | removeformat",
-                            content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:15px; background-color:transparent; }",
+                            content_style: `body { 
+                              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+                              font-size: 14px; 
+                              background-color: ${document.documentElement.classList.contains('dark') ? '#040405' : '#ffffff'}; 
+                              color: ${document.documentElement.classList.contains('dark') ? '#f8fafc' : '#0f172a'}; 
+                            }`
                           }}
                         />
                       </div>
