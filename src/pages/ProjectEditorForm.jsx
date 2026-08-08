@@ -202,8 +202,9 @@ function ProjectEditorForm() {
 
   return (
     // PSYCH-UI FIX: Replaced py-8 with pt-12 pb-12 so the form safely clears the fixed admin navbar!
-    <div className="relative w-full px-4 pt-12 pb-12 mx-auto max-w-5xl animate-[slideDown_0.4s_ease-out] isolate">
+    // <div className="relative w-full px-4 pt-12 pb-12 mx-auto max-w-5xl animate-[slideDown_0.4s_ease-out] isolate">
     
+    <div className="relative w-full px-4 pt-12 pb-12 mx-auto max-w-5xl transition-all duration-500 isolate">
 
       {/* Custom Toast Notification System */}
       <div className={`fixed top-28 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${toast.visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10 pointer-events-none"}`}>

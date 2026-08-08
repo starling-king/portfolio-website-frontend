@@ -287,7 +287,7 @@ function Contact() {
                       onChange={handleChange}
                       disabled={status === "loading"}
                       placeholder="John Doe"
-                      className="w-full px-4 py-3.5 text-sm font-semibold text-slate-900 dark:text-slate-50 bg-slate-50/50 dark:bg-[#040405]/50 border border-slate-200 dark:border-slate-800 rounded-2xl focus:bg-white dark:focus:bg-[#040405] focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all duration-300 placeholder:text-slate-400 dark:placeholder:text-slate-600 disabled:opacity-50"
+                      className="w-full px-5 py-4 text-sm font-semibold text-slate-900 dark:text-slate-50 bg-slate-50/80 dark:bg-[#0a0a0c]/50 border border-slate-200 dark:border-slate-800/80 rounded-2xl focus:bg-white dark:focus:bg-[#040405] focus:outline-none focus:border-primary-500 dark:focus:border-primary-400 focus:ring-4 focus:ring-primary-500/20 dark:focus:ring-primary-400/20 transition-all duration-300 shadow-sm placeholder:text-slate-400 dark:placeholder:text-slate-600 disabled:opacity-50"
                     />
                   </div>
 
@@ -304,7 +304,7 @@ function Contact() {
                       onChange={handleChange}
                       disabled={status === "loading"}
                       placeholder="john@route.com"
-                      className="w-full px-4 py-3.5 text-sm font-semibold text-slate-900 dark:text-slate-50 bg-slate-50/50 dark:bg-[#040405]/50 border border-slate-200 dark:border-slate-800 rounded-2xl focus:bg-white dark:focus:bg-[#040405] focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all duration-300 placeholder:text-slate-400 dark:placeholder:text-slate-600 disabled:opacity-50"
+                      className="w-full px-5 py-4 text-sm font-semibold text-slate-900 dark:text-slate-50 bg-slate-50/80 dark:bg-[#0a0a0c]/50 border border-slate-200 dark:border-slate-800/80 rounded-2xl focus:bg-white dark:focus:bg-[#040405] focus:outline-none focus:border-primary-500 dark:focus:border-primary-400 focus:ring-4 focus:ring-primary-500/20 dark:focus:ring-primary-400/20 transition-all duration-300 shadow-sm placeholder:text-slate-400 dark:placeholder:text-slate-600 disabled:opacity-50"
                     />
                   </div>
                 </div>

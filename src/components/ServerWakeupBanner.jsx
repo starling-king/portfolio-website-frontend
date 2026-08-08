@@ -49,7 +49,7 @@ export default function ServerWakeupBanner() {
 
   return (
     // PSYCH-UI: Fixed floating HUD. Detached from document flow to prevent layout shifts.
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-100 w-[calc(100%-2rem)] max-w-sm gpu-layer">
+    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-sm gpu-layer">
       
       {/* Benthic Glass Shell with Emerald Glow */}
       <div className="relative flex items-center gap-4 p-4 bg-white/90 dark:bg-[#040405]/90 backdrop-blur-2xl border border-slate-200 dark:border-slate-800 rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_-12px_rgba(16,185,129,0.15)] overflow-hidden">
